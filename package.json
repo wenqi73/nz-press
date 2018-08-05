@@ -1,0 +1,28 @@
+{
+  "name": "ng-press",
+  "version": "0.1.0",
+  "description": "An angular site generator inspiring by ng-zorro and vuepress",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wenqi73/ng-press.git"
+  },
+  "keywords": [
+    "angular",
+    "ng-zorro-antd"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wenqi73/ng-press/issues"
+  },
+  "homepage": "https://github.com/wenqi73/ng-press#readme",
+  "dependencies": {
+    "marked": "^0.4.0",
+    "wrench": "^1.5.9",
+    "yaml-front-matter": "^4.0.0"
+  }
+}
