@@ -8,13 +8,13 @@ import { ShareModule } from '../share/share.module';
   imports     : [
     ShareModule,
     RouterModule.forChild([
-{{router}}
+      {{router}}
     ])
   ],
   declarations: [
-{{declarations}}
+    {{declarations}}
   ]
 })
-export class NzDocsModule {
+export class DocsModule {
 
 }
