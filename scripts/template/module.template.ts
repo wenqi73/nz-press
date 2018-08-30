@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ShareModule } from '../share/share.module';
+import { MenuComponent } from './menu.component';
 
 {{imports}}
 
@@ -8,11 +9,21 @@ import { ShareModule } from '../share/share.module';
   imports     : [
     ShareModule,
     RouterModule.forChild([
-      {{router}}
+      {
+        path: '', component: MenuComponent,
+        children: [
+
+          {{router}}
+
+        ]
+      }
     ])
   ],
   declarations: [
+    MenuComponent,
+    
     {{declarations}}
+
   ]
 })
 export class DocsModule {

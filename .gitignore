@@ -7,6 +7,9 @@
 /out-tsc
 /site
 /site_scripts
+/demo/**/docs/*
+/docs/**/*.ts
+/docs/**/*.html
 
 # dependencies
 node_modules
