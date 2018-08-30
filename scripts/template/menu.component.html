@@ -4,17 +4,18 @@
       <i class="anticon trigger" [class.anticon-menu-fold]="!isCollapsed" [class.anticon-menu-unfold]="isCollapsed" (click)="toggleCollapsed()"></i>
     </div> -->
     
-    <ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="settings.layout.collapsed">
-      <ng-container *ngFor="let group of list">
-        <ng-template [ngIf]="group._hidden !== true">
-          <ng-container *ngFor="let child1 of group.children">
+    <ul nz-menu [nzMode]="'inline'">
+      <!-- 只有两层 -->
+      <!-- <ng-container *ngFor="let group of list">
+        <ng-template [ngIf]="group._hidden !== true"> -->
+          <ng-container *ngFor="let child1 of list">
             <li nz-menu-item *ngIf="child1._hidden !== true && !child1.children" routerLinkActive="ant-menu-item-selected">
               <a [routerLink]="[child1.link]">
                 <i [class]="[child1.icon]"></i>
                 <span>{{child1.i18n}}</span>
               </a>
             </li>
-            <li *ngIf="child1._hidden !== true && child1.children" nz-submenu routerLinkActive="ant-menu-submenu-open" [nzOpen]="child1._open" (nzOpenChange)="toggleOpen(child1)">
+            <li *ngIf="child1._hidden !== true && child1.children" nz-submenu routerLinkActive="ant-menu-submenu-open">
               <span title>
                 <i [class]="[child1.icon]"></i>
                 <span class="nav-text">{{child1.i18n}}</span>
@@ -31,8 +32,8 @@
               </ul>
             </li>
           </ng-container>
-        </ng-template>
-      </ng-container>
+        <!-- </ng-template>
+      </ng-container> -->
     </ul>
 
   </nz-sider>

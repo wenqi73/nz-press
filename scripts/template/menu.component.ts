@@ -7,6 +7,8 @@ import { MENUS } from './menu';
 })
 export class MenuComponent implements OnInit {
   list = MENUS;
+  isCollapsed = false;
+
   constructor() { }
 
   ngOnInit(): void { }
