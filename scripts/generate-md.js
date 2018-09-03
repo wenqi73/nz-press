@@ -4,9 +4,11 @@ const YFM = require('yaml-front-matter');
 const MD = require('marked');
 // const parseDemoMd = require('./parse-demo-md');
 const generateDemo = require('./generate-demo');
-const pathArg = process.argv[2] || 'docs';
+const sourcePath = process.argv[1];
+const destPath = process.argv[2];
 // 路径固定
-const compilePath = path.resolve(__dirname, `../${pathArg}`);
+const compilePath = path.join(destPath);
+
 if (!fs.statSync(compilePath).isDirectory()) { console.log('can not find'); }
 const dir = fs.readdirSync(compilePath);
 
@@ -125,8 +127,6 @@ function firstUppercase(text) {
 } 
 
 function copyFile(sourceFile, destPath) {
-  // const sourceFile = path.join(__dirname, fileName);
-  // const destPath = path.join(__dirname, dest, fileName);
   const readStream = fs.createReadStream(sourceFile);
   const writeStream = fs.createWriteStream(destPath);
   readStream.pipe(writeStream);
