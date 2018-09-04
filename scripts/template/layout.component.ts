@@ -3,9 +3,9 @@ import { MENUS } from './menu';
 
 @Component({
   selector: 'app-menu',
-  templateUrl: './menu.component.html',
+  templateUrl: './layout.component.html',
 })
-export class MenuComponent implements OnInit {
+export class LayoutComponent implements OnInit {
   list = MENUS;
   isCollapsed = false;
 

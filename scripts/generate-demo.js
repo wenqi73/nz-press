@@ -6,7 +6,7 @@ const angularNonBindAble = require('./angular-nonbindable');
 module.exports = function (componentPath, result) {
   const name = result.name;
   const demoTemplate = generateTemplate(result);
-  fs.writeFileSync(path.join(componentPath, `${name}-zh.html`), angularNonBindAble(demoTemplate.zh));
+  fs.writeFileSync(path.join(componentPath, `${name}-zh.html`), demoTemplate.zh);
   const demoComponent = generateDemoComponent(result);
   fs.writeFileSync(path.join(componentPath, `${name}-zh.ts`), demoComponent.zh);
 };
@@ -21,7 +21,7 @@ function generateComponentName(component, language) {
 
 function generateTemplate(result) {
   return {
-    zh: result.html
+    zh: wrapperDocs(angularNonBindAble(result.html))
   }
 };
 
@@ -46,25 +46,10 @@ function wrapperAPI(content) {
   return `<section class="markdown api-container" ngNonBindable>${content}</section>`
 }
 
-function wrapperHeader(title, whenToUse, language, example) {
-  if (example) {
-    return `<section class="markdown">
-	${title}
-	<section class="markdown" ngNonBindable>
-		${whenToUse}
-	</section>
-	<h2>
-		<span>${language === 'zh' ? '代码演示' : 'Examples'}</span>
-		<i class="anticon anticon-appstore code-box-expand-trigger" title="${language === 'zh' ? '展开全部代码' : 'expand all code'}" (click)="expandAllCode()"></i>
-	</h2>
-</section>${example}`
-  } else {
-    return `<section class="markdown">
-	${title}
-	<section class="markdown">
-		${whenToUse}
-	</section></section>`
-  }
+function wrapperDocs(content) {
+  return `<article class="markdown">
+  <section class="markdown" ngNonBindable>${content}</section>
+  </article>`
 }
 
 function wrapperAll(toc, content) {

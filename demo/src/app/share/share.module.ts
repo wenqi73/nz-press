@@ -7,6 +7,7 @@ import {
 } from 'ng-zorro-antd';
 
 import { NzHighlightModule } from './nz-highlight/nz-highlight.module';
+import { NzNavBottomModule } from './nz-nav-bottom/nz-nav-bottom.module';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { NzHighlightModule } from './nz-highlight/nz-highlight.module';
     ReactiveFormsModule,
     NgZorroAntdModule,
     NzHighlightModule,
+    NzNavBottomModule,
     // third libs
     // ColorSketchModule
   ],

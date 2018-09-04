@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ShareModule } from '../share/share.module';
-import { MenuComponent } from './menu.component';
+import { LayoutComponent } from './layout.component';
 
 {{imports}}
 
@@ -10,7 +10,7 @@ import { MenuComponent } from './menu.component';
     ShareModule,
     RouterModule.forChild([
       {
-        path: '', component: MenuComponent,
+        path: '', component: LayoutComponent,
         children: [
 
           {{router}}
@@ -20,7 +20,7 @@ import { MenuComponent } from './menu.component';
     ])
   ],
   declarations: [
-    MenuComponent,
+    LayoutComponent,
     
     {{declarations}}
 

@@ -35,7 +35,8 @@ function recurse(dir, parentPath, menuItem) {
         {
           // link: `/docs/${parentPath}${nameKey}`,
           i18n: `${nameKey}`,
-          children: []
+          children: [],
+          language: 'zh'
         }
       );
       // 传到下一个循环中
@@ -63,6 +64,8 @@ function recurse(dir, parentPath, menuItem) {
         {
           link: `/docs/${parentPath}${nameKey}`,
           i18n: `${nameKey}`,
+          language: 'zh',
+          children: null
         }
       );
         // {
@@ -76,13 +79,13 @@ function recurse(dir, parentPath, menuItem) {
 
 recurse(dir);
 copyFile(
-  path.resolve(__dirname, './template/menu.component.html'),
-  path.join(compilePath, `menu.component.html`)
+  path.resolve(__dirname, './template/layout.component.html'),
+  path.join(compilePath, `layout.component.html`)
 );
 
 copyFile(
-  path.resolve(__dirname, './template/menu.component.ts'),
-  path.join(compilePath, `menu.component.ts`)
+  path.resolve(__dirname, './template/layout.component.ts'),
+  path.join(compilePath, `layout.component.ts`)
 );
 
 // 生成menu
