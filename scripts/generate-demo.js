@@ -1,10 +1,12 @@
 const path = require('path');
 const fs = require('fs');
 const camelCase = require('./camelcase');
+const angularNonBindAble = require('./angular-nonbindable');
+
 module.exports = function (componentPath, result) {
   const name = result.name;
   const demoTemplate = generateTemplate(result);
-  fs.writeFileSync(path.join(componentPath, `${name}-zh.html`), demoTemplate.zh);
+  fs.writeFileSync(path.join(componentPath, `${name}-zh.html`), angularNonBindAble(demoTemplate.zh));
   const demoComponent = generateDemoComponent(result);
   fs.writeFileSync(path.join(componentPath, `${name}-zh.ts`), demoComponent.zh);
 };

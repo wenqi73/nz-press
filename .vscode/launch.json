@@ -11,6 +11,10 @@
             "program": "${workspaceFolder}/scripts/generate-md.js",
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
+            ],
+            "args": [
+                "./docs",
+                "./demo/src/app/docs"
             ]
         }
     ]

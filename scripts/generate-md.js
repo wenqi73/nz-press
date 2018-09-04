@@ -2,16 +2,16 @@ const fs = require('fs');
 const path = require('path');
 const YFM = require('yaml-front-matter');
 const MD = require('marked');
-// const parseDemoMd = require('./parse-demo-md');
 const generateDemo = require('./generate-demo');
-const sourcePath = process.argv[1];
-const destPath = process.argv[2];
-// 路径固定
-const compilePath = path.join(destPath);
+
+// md文件路径
+const sourcePath = path.join(process.argv[2]);
+// 目标文件路径
+const compilePath = path.join(process.argv[3]);
 
 if (!fs.statSync(compilePath).isDirectory()) { console.log('can not find'); }
-const dir = fs.readdirSync(compilePath);
 
+const dir = fs.readdirSync(sourcePath);
 let imports = '';
 let declarations = '';
 let entryComponents = [];
@@ -28,7 +28,7 @@ function recurse(dir, parentPath, menuItem) {
   if (!menuItem) menuItem = menus;
   dir.forEach(fileName => {
     const nameKey = nameWithoutSuffixUtil(fileName);
-    const filePath = path.join(compilePath, `${parentPath}${fileName}`);
+    const filePath = path.join(sourcePath, `${parentPath}${fileName}`);
     // 继续遍历目录
     if (fs.statSync(filePath).isDirectory()) {
       menuItem.push(
@@ -44,7 +44,6 @@ function recurse(dir, parentPath, menuItem) {
     }
     if (/.md$/.test(fileName)) {
       const demoMarkDownFile = fs.readFileSync(filePath);
-      // const parse = parseDemoMd(demoMarkDownFile);
       const content = YFM.loadFront(demoMarkDownFile).__content;
       // 生成html，ts
       generateDemo(path.join(compilePath, `${parentPath}`), { name: nameKey, html: MD(content) });
