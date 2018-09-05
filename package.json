@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "docs:init": "node ./scripts/generate-md.js ./docs"
+    "docs:init": "bash ./build.sh ./docs ./demo/src/app/docs"
   },
   "repository": {
     "type": "git",
