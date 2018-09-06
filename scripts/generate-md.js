@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const YFM = require('yaml-front-matter');
-const MD = require('marked');
+const MD = require('./marked');
 const generateDemo = require('./generate-demo');
 
 // md文件路径
@@ -44,10 +44,11 @@ function recurse(dir, parentPath, menuItem) {
       recurse(fs.readdirSync(filePath), `${parentPath}${nameKey}/`, menuItem);
     }
     if (/.md$/.test(fileName)) {
-      const demoMarkDownFile = fs.readFileSync(filePath);
-      const content = YFM.loadFront(demoMarkDownFile).__content;
+      const mdFile = fs.readFileSync(filePath);
+      const content = baseInfo(mdFile);
+      // const content = YFM.loadFront(demoMarkDownFile).__content;
       // 生成html，ts
-      generateDemo(path.join(compilePath, `${parentPath}`), { name: nameKey, html: MD(content) });
+      generateDemo(path.join(compilePath, `${parentPath}`), { name: nameKey, html: content });
       // imports
       imports += `import { ${componentName(nameKey)}ZhComponent } from './${parentPath}${nameKey}-zh';\n`;
       // declarations
@@ -132,4 +133,11 @@ function copyFile(sourceFile, destPath) {
   const readStream = fs.createReadStream(sourceFile);
   const writeStream = fs.createWriteStream(destPath);
   readStream.pipe(writeStream);
+}
+
+function baseInfo(file) {
+  const meta = YFM.loadFront(file);
+  const content = meta.__content;
+  delete meta.__content;
+  return MD(content);
 }

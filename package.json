@@ -25,5 +25,8 @@
     "marked": "^0.4.0",
     "wrench": "^1.5.9",
     "yaml-front-matter": "^4.0.0"
+  },
+  "devDependencies": {
+    "node-prismjs": "^0.1.2"
   }
 }
