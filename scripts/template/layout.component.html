@@ -40,9 +40,7 @@
     <div nz-row>
       <div nz-col [class.hide-menu]="hide" [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="6" [nzXl]="5" [nzXXl]="4" class="main-menu">
         <ul nz-menu [nzMode]="'inline'">
-          <!-- 只有两层 -->
-          <!-- <ng-container *ngFor="let group of list">
-                <ng-template [ngIf]="group._hidden !== true"> -->
+          <!-- 支持3层 -->
           <ng-container *ngFor="let child1 of list">
             <li nz-menu-item *ngIf="child1._hidden !== true && !child1.children" routerLinkActive="ant-menu-item-selected">
               <a [routerLink]="[child1.link]">
@@ -57,18 +55,32 @@
               </span>
               <ul>
                 <ng-container *ngFor="let child2 of child1.children">
-                  <li *ngIf="child2._hidden !== true" nz-menu-item routerLinkActive="ant-menu-item-selected">
+                  <li nz-menu-item *ngIf="child2._hidden !== true && !child2.children" routerLinkActive="ant-menu-item-selected">
                     <a [routerLink]="[child2.link]">
                       <i [class]="[child2.icon]"></i>
                       <span>{{child2.i18n}}</span>
                     </a>
                   </li>
+                  <li *ngIf="child2._hidden !== true && child2.children" nz-submenu routerLinkActive="ant-menu-submenu-open">
+                    <span title>
+                      <i [class]="[child2.icon]"></i>
+                      <span class="nav-text">{{child2.i18n}}</span>
+                    </span>
+                    <ul>
+                      <ng-container *ngFor="let child3 of child2.children">
+                        <li *ngIf="child3._hidden !== true" nz-menu-item routerLinkActive="ant-menu-item-selected">
+                          <a [routerLink]="[child3.link]">
+                            <i [class]="[child3.icon]"></i>
+                            <span>{{child3.i18n}}</span>
+                          </a>
+                        </li>
+                      </ng-container>
+                    </ul>
+                  </li>
                 </ng-container>
               </ul>
             </li>
           </ng-container>
-          <!-- </ng-template>
-              </ng-container> -->
         </ul>
       </div>
       <div nz-col class="main-container main-container-component" [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="18" [nzXl]="19" [nzXXl]="20">

@@ -29,8 +29,10 @@ function recurse(dir, parentPath, menuItem) {
   dir.forEach(fileName => {
     const nameKey = nameWithoutSuffixUtil(fileName);
     const filePath = path.join(sourcePath, `${parentPath}${fileName}`);
+    const destPath = path.join(compilePath, `${parentPath}`);
     // 继续遍历目录
     if (fs.statSync(filePath).isDirectory()) {
+      fs.mkdirSync(path.join(destPath, `${fileName}`));
       menuItem.push(
         {
           // link: `/docs/${parentPath}${nameKey}`,
@@ -40,40 +42,35 @@ function recurse(dir, parentPath, menuItem) {
         }
       );
       // 传到下一个循环中
-      menuItem = menuItem.find(m => m.i18n === `${nameKey}`).children;
-      recurse(fs.readdirSync(filePath), `${parentPath}${nameKey}/`, menuItem);
-    }
-    if (/.md$/.test(fileName)) {
-      const mdFile = fs.readFileSync(filePath);
-      const content = baseInfo(mdFile);
-      // const content = YFM.loadFront(demoMarkDownFile).__content;
-      // 生成html，ts
-      generateDemo(path.join(compilePath, `${parentPath}`), { name: nameKey, html: content });
-      // imports
-      imports += `import { ${componentName(nameKey)}ZhComponent } from './${parentPath}${nameKey}-zh';\n`;
-      // declarations
-      declarations += `\t\t${componentName(nameKey)}ZhComponent,\n`;
-      // routes
-      routes += `
-        {
-          path: '${parentPath}${nameKey}',
-          component: ${componentName(nameKey)}ZhComponent
-        },\n`;
-
-      // nameKey作为菜单名
-      menuItem.push(
-        {
-          link: `/docs/${parentPath}${nameKey}`,
-          i18n: `${nameKey}`,
-          language: 'zh',
-          children: null
-        }
-      );
-        // {
-        //   link: '/docs/${parentPath}${nameKey}',
-        //   i18n: ${nameKey},
-        //   children: []
-        // },\n`;
+      const parentMenu = menuItem.find(m => m.i18n === `${nameKey}`).children;
+      recurse(fs.readdirSync(filePath), `${parentPath}${nameKey}/`, parentMenu);
+    } else {
+      if (/.md$/.test(fileName)) {
+        const mdFile = fs.readFileSync(filePath);
+        const content = baseInfo(mdFile);
+        // 生成html，ts
+        generateDemo(destPath, { name: nameKey, html: content });
+        // imports
+        imports += `import { ${componentName(nameKey)}ZhComponent } from './${parentPath}${nameKey}-zh';\n`;
+        // declarations
+        declarations += `\t\t${componentName(nameKey)}ZhComponent,\n`;
+        // routes
+        routes += `
+          {
+            path: '${parentPath}${nameKey}',
+            component: ${componentName(nameKey)}ZhComponent
+          },\n`;
+  
+        // nameKey作为菜单名
+        menuItem.push(
+          {
+            link: `/docs/${parentPath}${nameKey}`,
+            i18n: `${nameKey}`,
+            language: 'zh',
+            children: null
+          }
+        );
+      }
     }
   });
 }
