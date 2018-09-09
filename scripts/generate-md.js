@@ -18,6 +18,26 @@ let entryComponents = [];
 let routes = ``;
 let menus = [];
 
+recurse(dir);
+
+copyFile(
+  path.resolve(__dirname, './template/layout.component.html'),
+  path.join(compilePath, `layout.component.html`)
+);
+
+copyFile(
+  path.resolve(__dirname, './template/layout.component.ts'),
+  path.join(compilePath, `layout.component.ts`)
+);
+
+// 生成menu
+const demoMenu = generateDemoMenu(menus);
+fs.writeFileSync(path.join(compilePath, `menu.ts`), demoMenu);
+
+// 生成module
+const demoModule = generateDemoModule();imports
+fs.writeFileSync(path.join(compilePath, `docs.module.ts`), demoModule);
+
 /**
  * 遍历每个文件
  * @param {*} dir 目录
@@ -47,9 +67,9 @@ function recurse(dir, parentPath, menuItem) {
     } else {
       if (/.md$/.test(fileName)) {
         const mdFile = fs.readFileSync(filePath);
-        const content = baseInfo(mdFile);
+        const result = baseInfo(mdFile);
         // 生成html，ts
-        generateDemo(destPath, { name: nameKey, html: content });
+        generateDemo(destPath, { name: nameKey, ...result });
         // imports
         imports += `import { ${componentName(nameKey)}ZhComponent } from './${parentPath}${nameKey}-zh';\n`;
         // declarations
@@ -74,25 +94,6 @@ function recurse(dir, parentPath, menuItem) {
     }
   });
 }
-
-recurse(dir);
-copyFile(
-  path.resolve(__dirname, './template/layout.component.html'),
-  path.join(compilePath, `layout.component.html`)
-);
-
-copyFile(
-  path.resolve(__dirname, './template/layout.component.ts'),
-  path.join(compilePath, `layout.component.ts`)
-);
-
-// 生成menu
-const demoMenu = generateDemoMenu(menus);
-fs.writeFileSync(path.join(compilePath, `menu.ts`), demoMenu);
-
-// 生成module
-const demoModule = generateDemoModule();imports
-fs.writeFileSync(path.join(compilePath, `docs.module.ts`), demoModule);
 
 function generateDemoMenu(menus) {
   let str = `export const MENUS = {{menus}};`;
@@ -136,5 +137,10 @@ function baseInfo(file) {
   const meta = YFM.loadFront(file);
   const content = meta.__content;
   delete meta.__content;
-  return MD(content);
+  return {
+    meta   : meta,
+    path   : path,
+    content: MD(content),
+    raw    : content
+  }
 }

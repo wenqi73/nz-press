@@ -7,7 +7,7 @@ module.exports = function (componentPath, result) {
   const name = result.name;
   const demoTemplate = generateTemplate(result);
   fs.writeFileSync(path.join(componentPath, `${name}-zh.html`), demoTemplate.zh);
-  const demoComponent = generateDemoComponent(result);
+  const demoComponent = generateDemoComponent(result.content);
   fs.writeFileSync(path.join(componentPath, `${name}-zh.ts`), demoComponent.zh);
 };
 
@@ -15,13 +15,9 @@ function componentName(component) {
   return camelCase(firstUppercase(component));
 }
 
-function generateComponentName(component, language) {
-  return `NzDemo${componentName(component)}${language}Component`
-}
-
 function generateTemplate(result) {
   return {
-    zh: wrapperDocs(angularNonBindAble(result.html))
+    zh: wrapperDocs(generateToc(result.meta, result.raw), angularNonBindAble(result.content))
   }
 };
 
@@ -46,8 +42,8 @@ function wrapperAPI(content) {
   return `<section class="markdown api-container" ngNonBindable>${content}</section>`
 }
 
-function wrapperDocs(content) {
-  return `<article class="markdown">
+function wrapperDocs(toc, content) {
+  return `<article class="markdown">${toc}
   <section class="markdown" ngNonBindable>${content}</section>
   </article>`
 }
@@ -56,23 +52,22 @@ function wrapperAll(toc, content) {
   return `<article>${toc}${content}</article>`
 }
 
-function generateToc(language, name, demoMap) {
-  let linkArray = [];
-  for (const key in demoMap) {
-    linkArray.push(
-      {
-        content: `<nz-link nzHref="#components-${name}-demo-${key}" nzTitle="${demoMap[key].meta.title[language]}"></nz-link>`,
-        order  : demoMap[key].meta.order
-      }
-    );
+function generateToc(meta, raw) {
+  if (meta.timeline) return '';
+  const remark = require('remark')();
+  const ast = remark.parse(raw);
+  let links = '';
+  for (let i = 0; i < ast.children.length; i++) {
+    const child = ast.children[i];
+    if (child.type === 'heading' && child.depth === 2) {
+      const text = child.children[0].value;
+      const lowerText = text.toLowerCase().replace(/ /g, '-').replace(/\./g, '-').replace(/\?/g,'');
+      links += `<nz-link nzHref="#${lowerText}" nzTitle="${text}"></nz-link>`
+    }
   }
-  linkArray.sort((pre, next) => pre.order - next.order);
-  const links = linkArray.map(link => link.content).join('');
-  return `
-    <nz-affix class="toc-affix" [nzOffsetTop]="16">
-      <nz-anchor [nzAffix]="false" nzShowInkInFixed (nzClick)="goLink($event)">
-        ${links}
-      </nz-anchor>
-    </nz-affix>
-  `;
+  return `<nz-affix class="toc-affix" [nzOffsetTop]="16">
+    <nz-anchor [nzAffix]="false" nzShowInkInFixed (nzClick)="goLink($event)">
+      ${links}
+    </nz-anchor>
+  </nz-affix>`;
 }
