@@ -22,11 +22,12 @@
   },
   "homepage": "https://github.com/wenqi73/ng-press#readme",
   "dependencies": {
-    "marked": "^0.4.0",
     "wrench": "^1.5.9",
     "yaml-front-matter": "^4.0.0"
   },
   "devDependencies": {
-    "node-prismjs": "^0.1.2"
+    "marked": "^0.4.0",
+    "node-prismjs": "^0.1.2",
+    "remark": "^9.0.0"
   }
 }

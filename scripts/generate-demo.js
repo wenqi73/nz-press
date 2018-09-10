@@ -7,7 +7,7 @@ module.exports = function (componentPath, result) {
   const name = result.name;
   const demoTemplate = generateTemplate(result);
   fs.writeFileSync(path.join(componentPath, `${name}-zh.html`), demoTemplate.zh);
-  const demoComponent = generateDemoComponent(result.content);
+  const demoComponent = generateDemoComponent(result);
   fs.writeFileSync(path.join(componentPath, `${name}-zh.ts`), demoComponent.zh);
 };
 
