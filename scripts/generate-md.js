@@ -70,10 +70,13 @@ function recurse(dir, parentPath, menuItem) {
         const result = baseInfo(mdFile);
         // 生成html，ts
         generateDemo(destPath, { name: nameKey, ...result });
+
         // imports
         imports += `import { ${componentName(nameKey)}ZhComponent } from './${parentPath}${nameKey}-zh';\n`;
+
         // declarations
         declarations += `\t\t${componentName(nameKey)}ZhComponent,\n`;
+        
         // routes
         routes += `
           {

@@ -13,6 +13,7 @@ if [ $# -eq 2 ]
     node ./scripts/generate-md.js ${SOURCE_DIR} ${DES_DIR}
     # cp -r ${SOURCE_DIR} ${DES_DIR}
     # cd ./demo
+    
 else 
     echo "Need the parameters"
     echo "./build.sh [<source path>] [<destiny path>]" 
