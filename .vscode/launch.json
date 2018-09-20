@@ -14,7 +14,7 @@
             ],
             "args": [
                 "./docs",
-                "./demo/src/app/docs"
+                "./lib/src/app/docs"
             ]
         }
     ]

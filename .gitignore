@@ -7,7 +7,7 @@
 /out-tsc
 /site
 /site_scripts
-/demo/**/docs/*
+/lib/**/docs/*
 /docs/**/*.ts
 /docs/**/*.html
 
