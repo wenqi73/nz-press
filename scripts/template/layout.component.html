@@ -1,6 +1,6 @@
 <div class="page-wrapper">
   <header id="header" class="clearfix">
-    <i class="anticon anticon-menu nav-phone-icon" (click)="toggleHide()"></i>
+    <i class="anticon anticon-menu nav-phone-icon"></i>
     <div nz-row>
       <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="8" [nzLg]="5" [nzXl]="5" [nzXXl]="4">
         <a id="logo" href>
@@ -11,7 +11,7 @@
       <div nz-col [nzXs]="0" [nzSm]="0" [nzMd]="16" [nzLg]="19" [nzXl]="19" [nzXXl]="20" class="nav nav-hide">
         <div id="search-box">
           <i class="anticon anticon-search"></i>
-          <input *ngIf="useDocsearch" nz-input #searchInput [placeholder]="language=='zh' ? '在 ng.ant.design 中搜索' : 'Search in ng.ant.design'">
+          <!-- <input *ngIf="useDocsearch" nz-input #searchInput [placeholder]="language=='zh' ? '在 ng.ant.design 中搜索' : 'Search in ng.ant.design'">
           <nz-select *ngIf="!useDocsearch" [nzPlaceHolder]="language=='zh'?'搜索组件...':'Search Components...'" nzShowSearch [(ngModel)]="searchComponent"
             (ngModelChange)="navigateToPage($event)">
             <ng-template [ngForOf]="componentList" ngFor let-component>
@@ -20,25 +20,25 @@
                 <span class="ant-component-decs">{{component.zh}}</span>
               </nz-option>
             </ng-template>
-          </nz-select>
+          </nz-select> -->
         </div>
-        <button nz-button nzGhost nzSize="small" class="header-lang-button" (click)="switchLanguage(language==='zh'?'en':'zh')">{{language=='zh'?'English':'中文'}}</button>
-        <nz-select nzSize="small" class="version" style="width: 68px;" [ngModel]="currentVersion" (ngModelChange)="navigateToVersion($event)">
+        <!-- <button nz-button nzGhost nzSize="small" class="header-lang-button" (click)="switchLanguage(language==='zh'?'en':'zh')">{{language=='zh'?'English':'中文'}}</button> -->
+        <!-- <nz-select nzSize="small" class="version" style="width: 68px;" [ngModel]="currentVersion" (ngModelChange)="navigateToVersion($event)">
           <nz-option *ngFor="let version of oldVersionList" [nzLabel]="version" [nzValue]="version"></nz-option>
           <nz-option [nzLabel]="currentVersion" [nzValue]="currentVersion"></nz-option>
-        </nz-select>
-        <ul nz-menu [nzMode]="'horizontal'" id="nav">
+        </nz-select> -->
+        <!-- <ul nz-menu [nzMode]="'horizontal'" id="nav">
           <li nz-menu-item nzSelected>
             <a routerLink="/doc/introduce/zh" *ngIf="language=='zh'"><span>组件</span></a>
             <a routerLink="/doc/introduce/en" *ngIf="language=='en'"><span>Components</span></a>
           </li>
-        </ul>
+        </ul> -->
       </div>
     </div>
   </header>
   <div class="main-wrapper">
     <div nz-row>
-      <div nz-col [class.hide-menu]="hide" [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="6" [nzXl]="5" [nzXXl]="4" class="main-menu">
+      <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="6" [nzXl]="5" [nzXXl]="4" class="main-menu">
         <ul nz-menu [nzMode]="'inline'">
           <!-- 支持3层 -->
           <ng-container *ngFor="let child1 of list">
@@ -165,9 +165,9 @@
             </div>
             <div style="margin-top: 20px;">
               <nz-popover [nzTrigger]="'click'" nzOverlayClassName="theme-color-content">
-                <div class="theme-color" nz-popover>
+                <!-- <div class="theme-color" nz-popover>
                   <div class="theme-color-value" [ngStyle]="{'background': color}"></div>
-                </div>
+                </div> -->
                 <!-- <ng-template #nzTemplate>
                   <color-sketch [color]="color" (onChangeComplete)="changeColor($event)"></color-sketch>
                 </ng-template> -->

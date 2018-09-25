@@ -5,9 +5,8 @@
 /dist-server
 /tmp
 /out-tsc
-/site
 /site_scripts
-/lib/**/docs/*
+/site/**/docs/*
 /docs/**/*.ts
 /docs/**/*.html
 

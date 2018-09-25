@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "description": "An angular site generator inspiring by ng-zorro and vuepress",
   "main": "index.js",
+  "bin": {
+    "ngpress": "bin/ngpress.sh"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "init": "bash ./build.sh ./docs ./lib/src/app/docs && ng serve"
+    "init": "bash ./build.sh ./docs ./site/src/app/docs && ng serve"
   },
   "repository": {
     "type": "git",
@@ -13,9 +16,10 @@
   },
   "keywords": [
     "angular",
-    "ng-zorro-antd"
+    "ng-zorro-antd",
+    "site-generator"
   ],
-  "author": "",
+  "author": "wenqi73",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/wenqi73/ng-press/issues"
@@ -32,11 +36,14 @@
     "@angular/platform-browser": "^6.1.6",
     "@angular/platform-browser-dynamic": "^6.1.6",
     "@angular/router": "^6.1.6",
+    "chalk": "^2.4.1",
+    "commander": "^2.18.0",
     "core-js": "^2.5.4",
     "ng-zorro-antd": "^1.4.0",
     "rxjs": "^6.3.0",
-    "zone.js": "^0.8.26",
-    "yaml-front-matter": "^4.0.0"
+    "semver": "^5.5.1",
+    "yaml-front-matter": "^4.0.0",
+    "zone.js": "^0.8.26"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.7.5",
@@ -60,5 +67,8 @@
     "marked": "^0.4.0",
     "node-prismjs": "^0.1.2",
     "remark": "^9.0.0"
+  },
+  "engines": {
+    "node": ">=8"
   }
 }

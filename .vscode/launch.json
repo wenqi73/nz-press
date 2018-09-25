@@ -7,6 +7,15 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "ngpress dev",
+            "program": "/usr/local/bin/ngpress",
+            "args": [
+                "dev"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "启动程序",
             "program": "${workspaceFolder}/scripts/generate-md.js",
             "outFiles": [

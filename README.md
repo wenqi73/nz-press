@@ -1,10 +1,19 @@
 # ng-press
 An angular site generator inspiring by [ng-zorro](https://github.com/NG-ZORRO/ng-zorro-antd) and [vuepress](https://github.com/vuejs/vuepress).
 
-Write your markdown in docs directory, then command: 
 ```bash
+# install @angular/cli
 $ npm i @angular/cli@latest -g
-$ npm i
-$ npm run init
+
+# install
+yarn global add ngpress # OR npm install -g ngpress
+
+# create a markdown file
+echo '# Hello NgPress' > README.md
+
+# start writing
+ngpress dev
+
+# build to static files
+ngpress build
 ```
-[http://localhost:4200/#/docs](http://localhost:4200/#/docs)

@@ -8,6 +8,7 @@ import { MENUS } from './menu';
 export class LayoutComponent implements OnInit {
   list = MENUS;
   isCollapsed = false;
+  language = 'zh';
 
   constructor() { }
 
