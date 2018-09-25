@@ -6,9 +6,11 @@ An angular site generator inspiring by [ng-zorro](https://github.com/NG-ZORRO/ng
 $ npm i @angular/cli@latest -g
 
 # install
-yarn global add nzpress # OR npm install -g nzpress
+npm install -g nzpress
 
 # create a markdown file
+mkdir docs
+cd docs
 echo '# Hello NzPress' > README.md
 
 # start writing
