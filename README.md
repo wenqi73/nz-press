@@ -1,4 +1,4 @@
-# ng-press
+# NzPress
 An angular site generator inspiring by [ng-zorro](https://github.com/NG-ZORRO/ng-zorro-antd) and [vuepress](https://github.com/vuejs/vuepress).
 
 ```bash
@@ -6,14 +6,14 @@ An angular site generator inspiring by [ng-zorro](https://github.com/NG-ZORRO/ng
 $ npm i @angular/cli@latest -g
 
 # install
-yarn global add ngpress # OR npm install -g ngpress
+yarn global add nzpress # OR npm install -g nzpress
 
 # create a markdown file
-echo '# Hello NgPress' > README.md
+echo '# Hello NzPress' > README.md
 
 # start writing
-ngpress dev
+nzpress dev
 
 # build to static files
-ngpress build
+nzpress build
 ```

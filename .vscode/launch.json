@@ -7,8 +7,8 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "ngpress dev",
-            "program": "/usr/local/bin/ngpress",
+            "name": "nzpress dev",
+            "program": "/usr/local/bin/nzpress",
             "args": [
                 "dev"
             ]

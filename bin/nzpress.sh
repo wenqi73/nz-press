@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 readonly CURRENT_DIR=$(cd $(dirname $0); pwd)
-readonly FILE_REAL_DIR=${CURRENT_DIR}/$(dirname $(readlink ${CURRENT_DIR}/ngpress))
+readonly FILE_REAL_DIR=${CURRENT_DIR}/$(dirname $(readlink ${CURRENT_DIR}/nzpress))
 readonly MD_DIR=`pwd`
 
 echo ${CURRENT_DIR}
