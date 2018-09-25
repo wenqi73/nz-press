@@ -20,6 +20,5 @@ if [[ "$1" == "dev" ]]; then
 fi
 
 if [[ "$1" == "build" ]]; then
-  ng build --base-href=./ --prod
-  mv ${FILE_REAL_DIR}/../dist/demo ${MD_DIR}
+  ng build --base-href=./ --prod --output-path ${MD_DIR}/dist
 fi
