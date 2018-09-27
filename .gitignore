@@ -6,9 +6,9 @@
 /tmp
 /out-tsc
 /site_scripts
-/site/**/docs/*
-/docs/**/*.ts
-/docs/**/*.html
+/site/*
+!/site/src/app/share/*
+!/site/src/app/app.component.ts
 
 # dependencies
 node_modules

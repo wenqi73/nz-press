@@ -1,9 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LayoutComponent } from './layout.component';
+
+{{imports}}
 
 const routes: Routes = [
-  { path: '', redirectTo: 'docs', pathMatch: 'full' },
-  { path: 'docs', loadChildren: './docs/docs.module#DocsModule'},
+  { path: '', redirectTo: '{{homeRoute}}', pathMatch: 'full' },
+  {
+    path: '', component: LayoutComponent,
+    children: [
+      {{router}}
+    ]
+  }
 ];
 
 @NgModule({

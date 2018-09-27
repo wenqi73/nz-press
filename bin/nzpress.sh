@@ -8,9 +8,14 @@ echo ${CURRENT_DIR}
 echo ${FILE_REAL_DIR}
 
 cd ${FILE_REAL_DIR}
-DOCS_DIR=${FILE_REAL_DIR}/../site/src/app/docs
-rm -rf ${DOCS_DIR}
-mkdir -p ${DOCS_DIR}
+DOCS_DIR=${FILE_REAL_DIR}../site/src/app
+
+for DIR in ${DOCS_DIR}/* ; do
+  dir_name=$(basename "${DIR}")
+  if [[ "${dir_name}" != "app.component.ts" && "${dir_name}" != "share" ]]; then
+    rm -rf ${DIR}
+  fi
+done
 
 # generate module
 node ${FILE_REAL_DIR}/../scripts/generate-md.js ${MD_DIR} ${DOCS_DIR}

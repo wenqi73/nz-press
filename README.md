@@ -3,19 +3,19 @@ An angular site generator inspiring by [ng-zorro](https://github.com/NG-ZORRO/ng
 
 ```bash
 # install @angular/cli
-$ npm install @angular/cli@latest -g
+npm install @angular/cli@latest -g
 
 # install
-$ npm install -g nz-press
+npm install -g nz-press
 
 # create a markdown file
-$ mkdir docs
-$ cd docs
-$ echo '# Hello NzPress' > README.md
+mkdir docs
+cd docs
+echo '# Hello NzPress' > README.md
 
 # start writing
-$ nzpress dev
+nzpress dev       
 
 # build to static files
-$ nzpress build
+nzpress build
 ```
