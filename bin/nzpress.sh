@@ -10,7 +10,8 @@ echo ${FILE_REAL_DIR}
 cd ${FILE_REAL_DIR}
 APP_DIR=${FILE_REAL_DIR}../site/src/app
 
-cp ${MD_DIR}/zh.json ${APP_DIR}/../assets/i18n
+# cp ${MD_DIR}/zh.json ${APP_DIR}/../assets/i18n
+cp ${MD_DIR}/config.ts ${APP_DIR}/../assets
 
 for DIR in ${APP_DIR}/* ; do
   dir_name=$(basename "${DIR}")

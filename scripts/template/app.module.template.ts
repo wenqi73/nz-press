@@ -28,6 +28,7 @@ export function createTranslateLoader(http: HttpClient) {
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+    // set name in config.ts, so TranslateModule is useless but keep
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
