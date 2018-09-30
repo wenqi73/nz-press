@@ -4,14 +4,15 @@ readonly CURRENT_DIR=$(cd $(dirname $0); pwd)
 readonly FILE_REAL_DIR=${CURRENT_DIR}/$(dirname $(readlink ${CURRENT_DIR}/nzpress))
 readonly MD_DIR=`pwd`
 
-echo ${CURRENT_DIR}
-echo ${FILE_REAL_DIR}
+# echo ${CURRENT_DIR}
+# echo ${FILE_REAL_DIR}
 
 cd ${FILE_REAL_DIR}
 APP_DIR=${FILE_REAL_DIR}../site/src/app
 
-# cp ${MD_DIR}/zh.json ${APP_DIR}/../assets/i18n
-cp ${MD_DIR}/config.ts ${APP_DIR}/../assets
+if [[ -f "${MD_DIR}/config.ts" ]]; then
+  cp ${MD_DIR}/config.ts ${APP_DIR}/../assets
+fi
 
 for DIR in ${APP_DIR}/* ; do
   dir_name=$(basename "${DIR}")
@@ -28,5 +29,5 @@ if [[ "$1" == "dev" ]]; then
 fi
 
 if [[ "$1" == "build" ]]; then
-  ng build --base-href=./ --prod --output-path ${MD_DIR}/dist
+  ng build --base-href=./ --prod --output-path ${MD_DIR}/nzpress/dist
 fi

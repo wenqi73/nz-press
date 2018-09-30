@@ -31,10 +31,12 @@ copyFile(
   path.join(compilePath, `layout.component.ts`)
 );
 
-// generate menu
-const demoMenu = generateMenu(menus);
-fs.writeFileSync(path.join(compilePath, `menu.ts`), demoMenu);
-
+// generate config
+fs.exists(path.join(compilePath, `../assets/config.ts`), function(exists) {
+  if (!exists) {
+    fs.writeFileSync(path.join(compilePath, `../assets/config.ts`), generateMenu(menus));
+  }
+});
 
 // generate module
 const moduleFile = generateModule();
@@ -57,7 +59,7 @@ function recurse(dir, parentPath, menuItem) {
     const filePath = path.join(sourcePath, `${parentPath}${fileName}`);
     const destPath = path.join(compilePath, `${parentPath}`);
     const routePath = `${parentPath}${nameKey}`;
-    
+    if (nameKey === 'nzpress' && nameKey.match(/^\./)) return;
     // continue recursing
     if (fs.statSync(filePath).isDirectory()) {
       fs.mkdirSync(path.join(destPath, `${fileName}`));
@@ -65,6 +67,7 @@ function recurse(dir, parentPath, menuItem) {
         {
           // link: `/docs/${parentPath}${nameKey}`,
           i18n: `${nameKey}`,
+          title: `${nameKey}`,
           children: [],
           language: 'zh'
         }
@@ -75,7 +78,7 @@ function recurse(dir, parentPath, menuItem) {
     } else {
       if (/.md$/.test(fileName)) {
         const mdFile = fs.readFileSync(filePath);
-        const result = baseInfo(mdFile);
+        const result = baseInfo(mdFile, filePath);
         // 生成html，ts
         generateDemo(destPath, { name: nameKey, ...result });
 
@@ -98,6 +101,7 @@ function recurse(dir, parentPath, menuItem) {
           {
             link: `/${routePath}`,
             i18n: `${nameKey}`,
+            title: result.title,
             language: 'zh',
             children: null
           }
@@ -108,7 +112,7 @@ function recurse(dir, parentPath, menuItem) {
 }
 
 function generateMenu(menus) {
-  let str = `export const MENUS = {{menus}};`;
+  let str = `const config = { title: '', sidebar: {{menus}} }; export default config;`;
   return str.replace(/{{menus}}/g, JSON.stringify(menus));
 }
 
@@ -152,14 +156,21 @@ function copyFile(sourceFile, destPath) {
   readStream.pipe(writeStream);
 }
 
-function baseInfo(file) {
+function baseInfo(file, filePath) {
   const meta = YFM.loadFront(file);
   const content = meta.__content;
+  let title = '无标题';
   delete meta.__content;
+  try {
+    title = content.match(/^# (.*)/)[1];
+  } catch (error) {
+    console.warn(filePath, '缺少标题');
+  }
   return {
     meta   : meta,
     path   : path,
     content: MD(content),
-    raw    : content
+    raw    : content,
+    title
   }
 }

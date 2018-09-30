@@ -7,6 +7,7 @@ import config from '../assets/config';
 })
 export class LayoutComponent implements OnInit {
   list = config.sidebar;
+  title = config.title;
   isCollapsed = false;
   language = 'zh';
 
