@@ -6,10 +6,10 @@ import config from '../../../assets/config';
   selector: 'nz-nav-bottom',
   template: `
     <section class="prev-next-nav">
-      <a class="prev-page" *ngIf="index-1>=0" [routerLink]="list[index-1]?.path">
+      <a class="prev-page" *ngIf="index-1>=0" [routerLink]="list[index-1]?.link">
         <span>{{ list[index - 1]?.label }}</span><span class="chinese">{{ list[index - 1]?.title }}</span>
       </a>
-      <a class="next-page" *ngIf="index+1<list?.length" [routerLink]="list[index+1]?.path">
+      <a class="next-page" *ngIf="index+1<list?.length" [routerLink]="list[index+1]?.link">
         <span>{{ list[index + 1]?.label }}</span><span class="chinese">{{ list[index + 1]?.title }}</span>
       </a>
     </section>
@@ -33,7 +33,7 @@ export class NzNavBottomComponent implements OnInit {
           return pre.concat(cur.children);
         }, []);
         this.list = this.flatSidebar([ ...config.sidebar ]);
-        this.index = this.list.findIndex(item => item.path === url);
+        this.index = this.list.findIndex(item => item.link === `/${url}`);
       }
     });
   }
@@ -42,7 +42,7 @@ export class NzNavBottomComponent implements OnInit {
     const result = [];
     sidebarList.forEach(sidebar => {
       if (sidebar.children) {
-        result.push(this.flatSidebar(sidebar.children));
+        result.push(...this.flatSidebar(sidebar.children));
       } else {
         result.push(sidebar);
       }

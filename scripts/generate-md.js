@@ -32,7 +32,7 @@ copyFile(
 );
 
 // generate config
-fs.exists(path.join(compilePath, `../assets/config.ts`), function(exists) {
+fs.exists(path.join(sourcePath, `config.ts`), function(exists) {
   if (!exists) {
     fs.writeFileSync(path.join(compilePath, `../assets/config.ts`), generateMenu(menus));
   }
@@ -162,7 +162,7 @@ function baseInfo(file, filePath) {
   let title = '无标题';
   delete meta.__content;
   try {
-    title = content.match(/^# (.*)/)[1];
+    title = content.match(/# (.*)/)[1];
   } catch (error) {
     console.warn(filePath, '缺少标题');
   }

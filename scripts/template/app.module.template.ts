@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { ShareModule } from './share/share.module';
 import { LayoutComponent } from './layout.component';
 
 import { AppComponent } from './app.component';
@@ -20,6 +21,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+    ShareModule,
     NgZorroAntdModule.forRoot(),
   ],
   entryComponents: [

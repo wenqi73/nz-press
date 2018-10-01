@@ -28,6 +28,7 @@ import { NzNavBottomModule } from './nz-nav-bottom/nz-nav-bottom.module';
     RouterModule,
     NgZorroAntdModule,
     NzHighlightModule,
+    NzNavBottomModule
     // third libs
   ]
 })
