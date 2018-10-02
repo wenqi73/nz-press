@@ -25,7 +25,7 @@ done
 node ${FILE_REAL_DIR}/../scripts/generate-md.js ${MD_DIR} ${APP_DIR}
 
 if [[ "$1" == "dev" ]]; then
-  ng serve -o
+  ng serve
 fi
 
 if [[ "$1" == "build" ]]; then
