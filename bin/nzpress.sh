@@ -10,8 +10,8 @@ readonly MD_DIR=`pwd`
 cd ${FILE_REAL_DIR}
 APP_DIR=${FILE_REAL_DIR}../site/src/app
 
-if [[ -f "${MD_DIR}/config.ts" ]]; then
-  cp ${MD_DIR}/config.ts ${APP_DIR}/../assets
+if [[ -f "${MD_DIR}/config.js" ]]; then
+  cp ${MD_DIR}/config.js ${APP_DIR}/../assets
 fi
 
 for DIR in ${APP_DIR}/* ; do

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import config from '../../../assets/config';
+import { menus } from '../../../assets/menus';
 
 @Component({
   selector: 'nz-nav-bottom',
@@ -33,10 +33,11 @@ export class NzNavBottomComponent implements OnInit {
       if (event instanceof NavigationEnd) {
         const url = window.location.pathname.slice(1);
         this.language = this.router.url.split('/')[ this.router.url.split('/').length - 1 ].split('#')[ 0 ];
-        const componentsList = config.sidebar.reduce((pre, cur) => {
-          return pre.concat(cur.children);
+        const componentsList = menus.reduce((pre, cur) => {
+          // TODO: attrType
+          return pre.concat((cur as any).children);
         }, []);
-        this.list = this.flatSidebar([ ...config.sidebar ]);
+        this.list = this.flatSidebar([ ...menus ]);
         this.index = this.list.findIndex(item => item.link === `/${url}`);
       }
     });

@@ -5,10 +5,11 @@ const angularNonBindAble = require('./angular-nonbindable');
 
 module.exports = function (componentPath, result) {
   const name = result.name;
+  const language = result.language;
   const demoTemplate = generateTemplate(result);
-  fs.writeFileSync(path.join(componentPath, `${name}-zh.html`), demoTemplate.zh);
+  fs.writeFileSync(path.join(componentPath, `${name}.html`), demoTemplate.zh);
   const demoComponent = generateDemoComponent(result);
-  fs.writeFileSync(path.join(componentPath, `${name}-zh.ts`), demoComponent.zh);
+  fs.writeFileSync(path.join(componentPath, `${name}.ts`), demoComponent.zh);
 };
 
 function componentName(component) {
@@ -27,8 +28,7 @@ function generateDemoComponent(content) {
   let output = demoComponentTemplate;
   output = output.replace(/{{component}}/g, component);
   let zhOutput = output;
-  zhOutput = zhOutput.replace(/{{componentName}}/g, `${componentName(component)}Zh`);
-  zhOutput = zhOutput.replace(/{{language}}/g, 'zh');
+  zhOutput = zhOutput.replace(/{{componentName}}/g, `${componentName(component + content.language)}`);
   return {
     zh: zhOutput
   };

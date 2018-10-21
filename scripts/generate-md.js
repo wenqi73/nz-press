@@ -9,7 +9,9 @@ const sourcePath = path.join(process.argv[2]);
 // 目标文件路径
 const compilePath = path.join(process.argv[3]);
 
-if (!fs.statSync(compilePath).isDirectory()) { console.log('can not find'); }
+if (!fs.statSync(compilePath).isDirectory()) {
+  console.log('can not find');
+}
 
 const dir = fs.readdirSync(sourcePath);
 let imports = '';
@@ -18,7 +20,33 @@ let entryComponents = [];
 let routes = '';
 let homeRoute = '';
 let menus = [];
+let locales = [];
 
+// generate config
+// fs.exists(path.join(sourcePath, `config.js`), function(exists) {
+//   if (exists) {
+//     console.log(exists);
+const config = require(path.join(sourcePath, `config.js`));
+if (config && config.locales) {
+  locales = Object.keys(config.locales);
+}
+//   } else {
+
+//   }
+// });
+
+for (let i = 0; i < dir.length; i++) {
+  const name = dir[i];
+  if (locales.indexOf(`/${name}/`) >= 0) {
+    dir.splice(i, 1);
+    i--;
+    fs.mkdirSync(path.join(compilePath, name));
+    recurse(fs.readdirSync(path.join(sourcePath, name)), `${name}/`, null, name);
+
+  }
+}
+
+// separate
 recurse(dir);
 
 copyFile(
@@ -32,11 +60,16 @@ copyFile(
 );
 
 // generate config
-fs.exists(path.join(sourcePath, `config.ts`), function(exists) {
-  if (!exists) {
-    fs.writeFileSync(path.join(compilePath, `../assets/config.ts`), generateMenu(menus));
-  }
-});
+// fs.exists(path.join(sourcePath, `config.js`), function(exists) {
+//   if (exists) {
+
+//   } else {
+//     fs.writeFileSync(path.join(compilePath, `../assets/config.js`), generateMenu(menus));
+//   }
+// });
+
+const menuFile = generateMenu(menus);
+fs.writeFileSync(path.join(compilePath, `../assets/menus.ts`), menuFile);
 
 // generate module
 const moduleFile = generateModule();
@@ -50,10 +83,13 @@ fs.writeFileSync(path.join(compilePath, `app-routing.module.ts`), routeModule);
  * 遍历每个文件
  * @param {*} dir 目录
  * @param {*} parentPath 父级路径
+ * @param {*} language 语言
  */
-function recurse(dir, parentPath, menuItem) {
+function recurse(dir, parentPath, menuItem, language) {
+  console.log(arguments);
   if (!parentPath) parentPath = '';
   if (!menuItem) menuItem = menus;
+  if (!language) language = '';
   dir.forEach(fileName => {
     const nameKey = nameWithoutSuffixUtil(fileName);
     const filePath = path.join(sourcePath, `${parentPath}${fileName}`);
@@ -63,57 +99,57 @@ function recurse(dir, parentPath, menuItem) {
     // continue recursing
     if (fs.statSync(filePath).isDirectory()) {
       fs.mkdirSync(path.join(destPath, `${fileName}`));
-      menuItem.push(
-        {
-          // link: `/docs/${parentPath}${nameKey}`,
-          i18n: `${nameKey}`,
-          title: `${nameKey}`,
-          children: [],
-          language: 'zh'
-        }
-      );
+      menuItem.push({
+        // link: `/docs/${parentPath}${nameKey}`,
+        title: `${nameKey}`,
+        children: [],
+        language
+      });
       // 传到下一个循环中
-      const parentMenu = menuItem.find(m => m.i18n === `${nameKey}`).children;
-      recurse(fs.readdirSync(filePath), `${routePath}/`, parentMenu);
+      const parentMenu = menuItem.find(m => m.title === `${nameKey}`).children;
+      recurse(fs.readdirSync(filePath), `${routePath}/`, parentMenu, language);
     } else {
       if (/.md$/.test(fileName)) {
         const mdFile = fs.readFileSync(filePath);
         const result = baseInfo(mdFile, filePath);
+        const nameAndLanguage = nameKey + language;
         // 生成html，ts
-        generateDemo(destPath, { name: nameKey, ...result });
+        generateDemo(destPath, {
+          name: nameKey,
+          language,
+          ...result
+        });
 
         // imports
-        imports += `import { ${componentName(nameKey)}ZhComponent } from './${routePath}-zh';\n`;
+        imports += `import { ${componentName(nameAndLanguage)}Component } from './${routePath}';\n`;
 
         // declarations
-        declarations += `\t\t${componentName(nameKey)}ZhComponent,\n`;
-        
+        declarations += `\t\t${componentName(nameAndLanguage)}Component,\n`;
+
         // routes
         if (!homeRoute) homeRoute = `${routePath}`;
         routes += `
           {
             path: '${routePath}',
-            component: ${componentName(nameKey)}ZhComponent
+            component: ${componentName(nameAndLanguage)}Component
           },\n`;
-  
+
         // nameKey作为菜单名
-        menuItem.push(
-          {
-            link: `/${routePath}`,
-            i18n: `${nameKey}`,
-            title: result.title,
-            language: 'zh',
-            children: null
-          }
-        );
+        menuItem.push({
+          link: `/${routePath}`,
+          title: result.title,
+          language,
+          children: null
+        });
       }
     }
   });
 }
 
 function generateMenu(menus) {
-  let str = `const config = { title: '', sidebar: {{menus}} }; export default config;`;
-  return str.replace(/{{menus}}/g, JSON.stringify(menus));
+  // let str = `const config = { title: '', sidebar: {{menus}} }; export default config;`;
+  const menuTemplate = String(fs.readFileSync(path.resolve(__dirname, './template/menus.ts')));
+  return menuTemplate.replace(/{{menus}}/g, JSON.stringify(menus));
 }
 
 function generateModule() {
@@ -148,7 +184,7 @@ function camelCase(value) {
 
 function firstUppercase(text) {
   return text.replace(/^[a-z]/, l => l.toUpperCase());
-} 
+}
 
 function copyFile(sourceFile, destPath) {
   const readStream = fs.createReadStream(sourceFile);
@@ -167,10 +203,10 @@ function baseInfo(file, filePath) {
     console.warn(filePath, '缺少标题');
   }
   return {
-    meta   : meta,
-    path   : path,
+    meta: meta,
+    path: path,
     content: MD(content),
-    raw    : content,
+    raw: content,
     title
   }
 }

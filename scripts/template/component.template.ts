@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector     : 'doc-{{component}}-{{language}}',
-  templateUrl  : './{{component}}-{{language}}.html',
+  selector     : 'doc-{{component}}',
+  templateUrl  : './{{component}}.html',
   preserveWhitespaces: false
 })
 export class {{componentName}}Component {

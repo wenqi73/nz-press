@@ -21,7 +21,7 @@
             </ng-template>
           </nz-select> -->
         </div>
-        <!-- <button nz-button nzGhost nzSize="small" class="header-lang-button" (click)="switchLanguage(language==='zh'?'en':'zh')">{{language=='zh'?'English':'中文'}}</button> -->
+        <button nz-button nzGhost nzSize="small" class="header-lang-button" (click)="switchLanguage(language==='zh'?'':'zh')">{{language=='zh'?'English':'中文'}}</button>
         <!-- <nz-select nzSize="small" class="version" style="width: 68px;" [ngModel]="currentVersion" (ngModelChange)="navigateToVersion($event)">
           <nz-option *ngFor="let version of oldVersionList" [nzLabel]="version" [nzValue]="version"></nz-option>
           <nz-option [nzLabel]="currentVersion" [nzValue]="currentVersion"></nz-option>
@@ -41,33 +41,33 @@
         <ul nz-menu [nzMode]="'inline'">
           <!-- 支持3层 -->
           <ng-container *ngFor="let child1 of list">
-            <li nz-menu-item *ngIf="child1._hidden !== true && !child1.children" routerLinkActive="ant-menu-item-selected">
+            <li nz-menu-item *ngIf="child1.language === language && !child1.children" routerLinkActive="ant-menu-item-selected">
               <a [routerLink]="[child1.link]">
                 <i [class]="[child1.icon]"></i>
                 <span>{{ child1.title }}</span>
               </a>
             </li>
-            <li *ngIf="child1._hidden !== true && child1.children" nz-submenu routerLinkActive="ant-menu-submenu-open">
+            <li *ngIf="child1.language === language && child1.children" nz-submenu routerLinkActive="ant-menu-submenu-open">
               <span title>
                 <i [class]="[child1.icon]"></i>
                 <span class="nav-text">{{ child1.title }}</span>
               </span>
               <ul>
                 <ng-container *ngFor="let child2 of child1.children">
-                  <li nz-menu-item *ngIf="child2._hidden !== true && !child2.children" routerLinkActive="ant-menu-item-selected">
+                  <li nz-menu-item *ngIf="child2.language === language && !child2.children" routerLinkActive="ant-menu-item-selected">
                     <a [routerLink]="[child2.link]">
                       <i [class]="[child2.icon]"></i>
                       <span>{{ child2.title }}</span>
                     </a>
                   </li>
-                  <li *ngIf="child2._hidden !== true && child2.children" nz-submenu routerLinkActive="ant-menu-submenu-open">
+                  <li *ngIf="child2.language === language && child2.children" nz-submenu routerLinkActive="ant-menu-submenu-open">
                     <span title>
                       <i [class]="[child2.icon]"></i>
                       <span class="nav-text">{{ child2.title }}</span>
                     </span>
                     <ul>
                       <ng-container *ngFor="let child3 of child2.children">
-                        <li *ngIf="child3._hidden !== true" nz-menu-item routerLinkActive="ant-menu-item-selected">
+                        <li *ngIf="child3.language === language " nz-menu-item routerLinkActive="ant-menu-item-selected">
                           <a [routerLink]="[child3.link]">
                             <i [class]="[child3.icon]"></i>
                             <span>{{ child3.title }}</span>
