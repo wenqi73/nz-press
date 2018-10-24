@@ -29,5 +29,5 @@ if [[ "$1" == "dev" ]]; then
 fi
 
 if [[ "$1" == "build" ]]; then
-  ng build --base-href=./ --prod --output-path ${MD_DIR}/nzpress/dist
+  ng build --prod --output-path ${MD_DIR}/nzpress/dist
 fi

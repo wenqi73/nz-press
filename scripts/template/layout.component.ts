@@ -16,13 +16,13 @@ export class LayoutComponent implements OnInit {
   constructor(private _router: Router) { }
 
   switchLanguage(value: string) {
-    console.log(this._router.url);
     let url = this._router.url;
+    // English is ''
     if (this.language !== '') {
-      url = this._router.url.split('/').slice(1).join('/');
+      url = this._router.url.split('/').slice(2).join('/');
     } 
     this.language = value;
-    this._router.navigate(['/', value, url])
+    this._router.navigateByUrl(`/${value}${url}`);
   }
 
   ngOnInit(): void { }
