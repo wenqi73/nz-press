@@ -13,7 +13,10 @@ export class LayoutComponent implements OnInit {
   isCollapsed = false;
   language = '';
 
-  constructor(private _router: Router) { }
+  constructor(private _router: Router) {
+    const flg = this._router.url.split('/')[1];
+    this.language = Object.keys(config.locales).findIndex(l => `/${flg}/` === l) > -1 ? flg : '';
+  }
 
   switchLanguage(value: string) {
     let url = this._router.url;

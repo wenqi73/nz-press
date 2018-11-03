@@ -22,27 +22,22 @@ let homeRoute = '';
 let menus = [];
 let locales = [];
 
-// generate config
-// fs.exists(path.join(sourcePath, `config.js`), function(exists) {
-//   if (exists) {
-//     console.log(exists);
 const config = require(path.join(sourcePath, `config.js`));
 if (config && config.locales) {
   locales = Object.keys(config.locales);
+  // locals = ['/', '/zh/']
 }
-//   } else {
 
-//   }
-// });
-
+/**
+ * pick the locals directory
+ */
 for (let i = 0; i < dir.length; i++) {
   const name = dir[i];
   if (locales.indexOf(`/${name}/`) >= 0) {
     dir.splice(i, 1);
     i--;
     fs.mkdirSync(path.join(compilePath, name));
-    recurse(fs.readdirSync(path.join(sourcePath, name)), `${name}/`, null, name);
-
+    recurse(fs.readdirSync(path.join(sourcePath, name)), `${name}/`, name);
   }
 }
 
@@ -59,14 +54,15 @@ copyFile(
   path.join(compilePath, `layout.component.ts`)
 );
 
-// generate config
-// fs.exists(path.join(sourcePath, `config.js`), function(exists) {
-//   if (exists) {
-
-//   } else {
-//     fs.writeFileSync(path.join(compilePath, `../assets/config.js`), generateMenu(menus));
-//   }
-// });
+if (locales.length > 0) {
+  locales.forEach(l => {
+    const sidebar = config.locales[l].sidebar;
+    // set language
+    sidebar.forEach(s => s.language = l.replace(/\//g, ''));
+    // generate menu
+    menus.push(...sidebar);
+  })
+}
 
 const menuFile = generateMenu(menus);
 fs.writeFileSync(path.join(compilePath, `../assets/menus.ts`), menuFile);
@@ -85,10 +81,8 @@ fs.writeFileSync(path.join(compilePath, `app-routing.module.ts`), routeModule);
  * @param {*} parentPath 父级路径
  * @param {*} language 语言
  */
-function recurse(dir, parentPath, menuItem, language) {
-  console.log(arguments);
+function recurse(dir, parentPath, language) {
   if (!parentPath) parentPath = '';
-  if (!menuItem) menuItem = menus;
   if (!language) language = '';
   dir.forEach(fileName => {
     const nameKey = nameWithoutSuffixUtil(fileName);
@@ -99,21 +93,21 @@ function recurse(dir, parentPath, menuItem, language) {
     // continue recursing
     if (fs.statSync(filePath).isDirectory()) {
       fs.mkdirSync(path.join(destPath, `${fileName}`));
-      menuItem.push({
-        // link: `/docs/${parentPath}${nameKey}`,
-        title: `${nameKey}`,
-        children: [],
-        language
-      });
-      // 传到下一个循环中
-      const parentMenu = menuItem.find(m => m.title === `${nameKey}`).children;
-      recurse(fs.readdirSync(filePath), `${routePath}/`, parentMenu, language);
+      // menuItem.push({
+      //   title: `${nameKey}`,
+      //   children: [],
+      //   language
+      // });
+
+      // sub-directory
+      // const parentMenu = menuItem.find(m => m.title === `${nameKey}`).children;
+      recurse(fs.readdirSync(filePath), `${routePath}/`, language);
     } else {
       if (/.md$/.test(fileName)) {
         const mdFile = fs.readFileSync(filePath);
         const result = baseInfo(mdFile, filePath);
         const nameAndLanguage = nameKey + language;
-        // 生成html，ts
+        // html，ts
         generateDemo(destPath, {
           name: nameKey,
           language,
@@ -134,13 +128,12 @@ function recurse(dir, parentPath, menuItem, language) {
             component: ${componentName(nameAndLanguage)}Component
           },\n`;
 
-        // nameKey作为菜单名
-        menuItem.push({
-          link: `/${routePath}`,
-          title: result.title,
-          language,
-          children: null
-        });
+        // menuItem.push({
+        //   link: `/${routePath}`,
+        //   title: result.title,
+        //   language,
+        //   children: null
+        // });
       }
     }
   });
