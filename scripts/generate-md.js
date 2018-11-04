@@ -22,7 +22,7 @@ let homeRoute = '';
 let menus = [];
 let locales = [];
 
-const config = require(path.join(sourcePath, `config.js`));
+const config = require(path.join(sourcePath, '.nzpress', 'config.js'));
 if (config && config.locales) {
   locales = Object.keys(config.locales);
   // locals = ['/', '/zh/']
@@ -37,7 +37,7 @@ for (let i = 0; i < dir.length; i++) {
     dir.splice(i, 1);
     i--;
     fs.mkdirSync(path.join(compilePath, name));
-    recurse(fs.readdirSync(path.join(sourcePath, name)), `${name}/`, name);
+    recurse(fs.readdirSync(path.join(sourcePath, name)), `${name}/`, null, name);
   }
 }
 
@@ -55,6 +55,8 @@ copyFile(
 );
 
 if (locales.length > 0) {
+  // reset menus
+  menus = [];
   locales.forEach(l => {
     const sidebar = config.locales[l].sidebar;
     // set language
@@ -77,31 +79,32 @@ fs.writeFileSync(path.join(compilePath, `app-routing.module.ts`), routeModule);
 
 /**
  * 遍历每个文件
- * @param {*} dir 目录
- * @param {*} parentPath 父级路径
- * @param {*} language 语言
+ * @param {array} dir 目录
+ * @param {string} parentPath 父级路径
+ * @param {array} menuItem 左侧菜单
+ * @param {string} language 语言
  */
-function recurse(dir, parentPath, language) {
+function recurse(dir, parentPath, menuItem, language) {
   if (!parentPath) parentPath = '';
+  if (!menuItem) menuItem = menus;
   if (!language) language = '';
   dir.forEach(fileName => {
+    if (fileName.match(/^\./)) return;
     const nameKey = nameWithoutSuffixUtil(fileName);
     const filePath = path.join(sourcePath, `${parentPath}${fileName}`);
     const destPath = path.join(compilePath, `${parentPath}`);
     const routePath = `${parentPath}${nameKey}`;
-    if (nameKey === 'nzpress' && nameKey.match(/^\./)) return;
     // continue recursing
     if (fs.statSync(filePath).isDirectory()) {
       fs.mkdirSync(path.join(destPath, `${fileName}`));
-      // menuItem.push({
-      //   title: `${nameKey}`,
-      //   children: [],
-      //   language
-      // });
-
+      menuItem.push({
+        title: `${nameKey}`,
+        children: [],
+        language
+      });
       // sub-directory
-      // const parentMenu = menuItem.find(m => m.title === `${nameKey}`).children;
-      recurse(fs.readdirSync(filePath), `${routePath}/`, language);
+      const parentMenu = menuItem.find(m => m.title === `${nameKey}`).children;
+      recurse(fs.readdirSync(filePath), `${routePath}/`, parentMenu, language);
     } else {
       if (/.md$/.test(fileName)) {
         const mdFile = fs.readFileSync(filePath);
@@ -128,12 +131,12 @@ function recurse(dir, parentPath, language) {
             component: ${componentName(nameAndLanguage)}Component
           },\n`;
 
-        // menuItem.push({
-        //   link: `/${routePath}`,
-        //   title: result.title,
-        //   language,
-        //   children: null
-        // });
+        menuItem.push({
+          link: `/${routePath}`,
+          title: result.title,
+          language,
+          children: null
+        });
       }
     }
   });
