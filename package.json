@@ -1,6 +1,6 @@
 {
   "name": "nz-press",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "An angular site generator inspiring by ng-zorro and vuepress",
   "main": "index.js",
   "bin": {
@@ -8,8 +8,10 @@
   },
   "scripts": {
     "start": "cd docs && bash ../bin/nzpress.sh dev",
-    "build": "cd docs && bash ../bin/nzpress.sh build",
-    "move": "rm -rf ../nzpress-doc/* && cp -r ./docs/.nzpress/dist/* ../nzpress-doc/ && cd ../nzpress-doc/ && git checkout update-doc && git add . && git commit -m 'update: docs' && git pull origin master --rebase && git push -u origin update-doc -f"
+    "build": "bash build-test.sh",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json",
+    "move": "rm -rf ../nzpress-doc/* && cp -r ./docs/.nzpress/dist/* ../nzpress-doc/ && cd ../nzpress-doc/ && git checkout update-doc && git add . && git commit -m 'update: docs' && git pull origin master --rebase && git push -u origin update-doc -f",
+    "release": "node ./scripts/publish/publish.js"
   },
   "repository": {
     "type": "git",
