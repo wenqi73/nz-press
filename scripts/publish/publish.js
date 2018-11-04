@@ -41,7 +41,7 @@ checkout();
 function changeVersion() {
   log.info('Updating version number...');
 
-  const packageJson = path.join(__dirname, '../package.json');
+  const packageJson = path.join(__dirname, '../../package.json');
   const currentVersion = fs.readFileSync(packageJson, 'utf-8').match(/"version": "([0-9.]+)"/)[ 1 ];
 
   let versionNumberValid = false;
