@@ -8,7 +8,7 @@ readonly MD_DIR=`pwd`
 # echo ${FILE_REAL_DIR}
 
 cd ${FILE_REAL_DIR}
-APP_DIR=${FILE_REAL_DIR}../site/src/app
+APP_DIR=${FILE_REAL_DIR}/../site/src/app
 
 if [[ -f "${MD_DIR}/.nzpress/config.js" ]]; then
   cp ${MD_DIR}/.nzpress/config.js ${APP_DIR}/../assets
