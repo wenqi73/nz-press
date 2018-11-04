@@ -7,7 +7,9 @@
     "nzpress": "bin/nzpress.sh"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "cd docs && bash ../bin/nzpress.sh dev",
+    "build": "cd docs && bash ../bin/nzpress.sh build",
+    "move": "rm -rf ../nzpress-doc/* && cp -r ./docs/.nzpress/dist/* ../nzpress-doc/ && cd ../nzpress-doc/ && git checkout update-doc && git add . && git commit -m 'update: docs' && git pull origin master --rebase && git push -u origin update-doc -f"
   },
   "repository": {
     "type": "git",

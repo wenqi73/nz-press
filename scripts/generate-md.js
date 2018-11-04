@@ -22,19 +22,15 @@ let homeRoute = '';
 let menus = [];
 let locales = [];
 
-// generate config
-// fs.exists(path.join(sourcePath, `config.js`), function(exists) {
-//   if (exists) {
-//     console.log(exists);
-const config = require(path.join(sourcePath, `config.js`));
+const config = require(path.join(sourcePath, '.nzpress', 'config.js'));
 if (config && config.locales) {
   locales = Object.keys(config.locales);
+  // locals = ['/', '/zh/']
 }
-//   } else {
 
-//   }
-// });
-
+/**
+ * pick the locals directory
+ */
 for (let i = 0; i < dir.length; i++) {
   const name = dir[i];
   if (locales.indexOf(`/${name}/`) >= 0) {
@@ -42,7 +38,6 @@ for (let i = 0; i < dir.length; i++) {
     i--;
     fs.mkdirSync(path.join(compilePath, name));
     recurse(fs.readdirSync(path.join(sourcePath, name)), `${name}/`, null, name);
-
   }
 }
 
@@ -59,14 +54,17 @@ copyFile(
   path.join(compilePath, `layout.component.ts`)
 );
 
-// generate config
-// fs.exists(path.join(sourcePath, `config.js`), function(exists) {
-//   if (exists) {
-
-//   } else {
-//     fs.writeFileSync(path.join(compilePath, `../assets/config.js`), generateMenu(menus));
-//   }
-// });
+if (locales.length > 0) {
+  // reset menus
+  menus = [];
+  locales.forEach(l => {
+    const sidebar = config.locales[l].sidebar;
+    // set language
+    sidebar.forEach(s => s.language = l.replace(/\//g, ''));
+    // generate menu
+    menus.push(...sidebar);
+  })
+}
 
 const menuFile = generateMenu(menus);
 fs.writeFileSync(path.join(compilePath, `../assets/menus.ts`), menuFile);
@@ -81,31 +79,30 @@ fs.writeFileSync(path.join(compilePath, `app-routing.module.ts`), routeModule);
 
 /**
  * 遍历每个文件
- * @param {*} dir 目录
- * @param {*} parentPath 父级路径
- * @param {*} language 语言
+ * @param {array} dir 目录
+ * @param {string} parentPath 父级路径
+ * @param {array} menuItem 左侧菜单
+ * @param {string} language 语言
  */
 function recurse(dir, parentPath, menuItem, language) {
-  console.log(arguments);
   if (!parentPath) parentPath = '';
   if (!menuItem) menuItem = menus;
   if (!language) language = '';
   dir.forEach(fileName => {
+    if (fileName.match(/^\./)) return;
     const nameKey = nameWithoutSuffixUtil(fileName);
     const filePath = path.join(sourcePath, `${parentPath}${fileName}`);
     const destPath = path.join(compilePath, `${parentPath}`);
     const routePath = `${parentPath}${nameKey}`;
-    if (nameKey === 'nzpress' && nameKey.match(/^\./)) return;
     // continue recursing
     if (fs.statSync(filePath).isDirectory()) {
       fs.mkdirSync(path.join(destPath, `${fileName}`));
       menuItem.push({
-        // link: `/docs/${parentPath}${nameKey}`,
         title: `${nameKey}`,
         children: [],
         language
       });
-      // 传到下一个循环中
+      // sub-directory
       const parentMenu = menuItem.find(m => m.title === `${nameKey}`).children;
       recurse(fs.readdirSync(filePath), `${routePath}/`, parentMenu, language);
     } else {
@@ -113,7 +110,7 @@ function recurse(dir, parentPath, menuItem, language) {
         const mdFile = fs.readFileSync(filePath);
         const result = baseInfo(mdFile, filePath);
         const nameAndLanguage = nameKey + language;
-        // 生成html，ts
+        // html，ts
         generateDemo(destPath, {
           name: nameKey,
           language,
@@ -134,7 +131,6 @@ function recurse(dir, parentPath, menuItem, language) {
             component: ${componentName(nameAndLanguage)}Component
           },\n`;
 
-        // nameKey作为菜单名
         menuItem.push({
           link: `/${routePath}`,
           title: result.title,
