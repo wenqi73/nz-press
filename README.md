@@ -9,8 +9,7 @@ npm install @angular/cli@latest -g
 npm install -g nz-press
 
 # create a markdown file
-mkdir docs
-cd docs
+mkdir docs && cd docs
 echo '# Hello NzPress' > README.md
 
 # start writing
