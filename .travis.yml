@@ -26,7 +26,8 @@ before_install:
 
 before_script:
   - npm install -g @angular/cli
-  - npm install -g karma
+  - npm uninstall -g nz-press
+  - npm cache verify
 
 script:
   - npm run $TASK
