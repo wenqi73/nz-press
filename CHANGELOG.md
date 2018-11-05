@@ -1,3 +1,12 @@
+## [0.2.1](https://github.com/wenqi73/nz-press/compare/0.2.0...0.2.1) (2018-11-05)
+
+
+### Bug Fixes
+
+* duplicate name when generating module ([#4](https://github.com/wenqi73/nz-press/issues/4)) ([3795e97](https://github.com/wenqi73/nz-press/commit/3795e97))
+
+
+
 <a name="0.2.0"></a>
 # 0.2.0 (2018-11-04)
 

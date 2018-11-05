@@ -86,8 +86,8 @@ function changeVersion() {
 function fetchOlderVersions() {
   log.info('Fetching older versions...');
   execSync('git checkout master');
-  execSync('git pull origin master');
-  execSync('git fetch origin master --prune --tags');
+  execSync('git pull np master');
+  execSync('git fetch np master --prune --tags');
   log.success('Older versions fetched!');
 }
 

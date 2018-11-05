@@ -1,6 +1,6 @@
 {
   "name": "nz-press",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "An angular site generator inspiring by ng-zorro and vuepress",
   "main": "index.js",
   "bin": {
