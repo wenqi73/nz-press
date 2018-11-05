@@ -22,20 +22,14 @@ let homeRoute = '';
 let menus = [];
 let locales = [];
 
-
-fs.exists(path.join(sourcePath, '.nzpress', 'config.js'), function(exists) {
-  if (exists) {
-    const config = require(path.join(sourcePath, '.nzpress', 'config.js'));
-  	locales = Object.keys(config.locales);
-  }
-});
-
-// const config = require(path.join(sourcePath, '.nzpress', 'config.js'));
-// if (config && config.locales) {
-//   locales = Object.keys(config.locales);
-//   // locals = ['/', '/zh/']
-// }
-
+let config;
+try {
+  config = require(path.join(sourcePath, '.nzpress', 'config.js'));
+  locales = Object.keys(config.locales);
+} catch (err) {
+  console.log('There is no config.js');
+}
+   
 /**
  * pick the locals directory
  */
@@ -72,6 +66,10 @@ if (locales.length > 0) {
     // generate menu
     menus.push(...sidebar);
   })
+}
+
+if (menus.length > 0) {
+  homeRoute = menus[0].link;
 }
 
 const menuFile = generateMenu(menus);
@@ -132,7 +130,6 @@ function recurse(dir, parentPath, menuItem, language) {
         declarations += `\t\t${componentName(nameAndLanguage)}Component,\n`;
 
         // routes
-        if (!homeRoute) homeRoute = `${routePath}`;
         routes += `
           {
             path: '${routePath}',
@@ -151,7 +148,6 @@ function recurse(dir, parentPath, menuItem, language) {
 }
 
 function generateMenu(menus) {
-  // let str = `const config = { title: '', sidebar: {{menus}} }; export default config;`;
   const menuTemplate = String(fs.readFileSync(path.resolve(__dirname, './template/menus.ts')));
   return menuTemplate.replace(/{{menus}}/g, JSON.stringify(menus));
 }
