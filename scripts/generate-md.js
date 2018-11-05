@@ -22,11 +22,19 @@ let homeRoute = '';
 let menus = [];
 let locales = [];
 
-const config = require(path.join(sourcePath, '.nzpress', 'config.js'));
-if (config && config.locales) {
-  locales = Object.keys(config.locales);
-  // locals = ['/', '/zh/']
-}
+
+fs.exists(path.join(sourcePath, '.nzpress', 'config.js'), function(exists) {
+  if (exists) {
+    const config = require(path.join(sourcePath, '.nzpress', 'config.js'));
+  	locales = Object.keys(config.locales);
+  }
+});
+
+// const config = require(path.join(sourcePath, '.nzpress', 'config.js'));
+// if (config && config.locales) {
+//   locales = Object.keys(config.locales);
+//   // locals = ['/', '/zh/']
+// }
 
 /**
  * pick the locals directory
