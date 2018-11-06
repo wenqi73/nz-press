@@ -1,6 +1,6 @@
 {
   "name": "nz-press",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "An angular site generator inspiring by ng-zorro and vuepress",
   "main": "index.js",
   "bin": {
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wenqi73/nz-press.git"
+    "url": "https://github.com/ng-alliance/nz-press"
   },
   "keywords": [
     "angular",
@@ -25,9 +25,9 @@
   "author": "wenqi73",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/wenqi73/nzpress/issues"
+    "url": "https://github.com/ng-alliance/nz-press/issues"
   },
-  "homepage": "https://github.com/wenqi73/nz-press#readme",
+  "homepage": "https://github.com/ng-alliance/nz-press#readme",
   "dependencies": {
     "@angular-devkit/build-angular": "~0.7.5",
     "@angular/animations": "^6.1.6",
