@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { menus } from '../../../assets/menus';
 import config from '../../../assets/config';
+import { ConfigService } from '../config.service';
 
 @Component({
   selector: 'nz-nav-bottom',
@@ -25,22 +26,23 @@ export class NzNavBottomComponent implements OnInit {
   index = 0;
   language = '';
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private service: ConfigService) {
 
   }
 
   ngOnInit(): void {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        const url = window.location.pathname.slice(1);
-        const flg = window.location.pathname.split('/').splice(1, 1).join('');
-        this.language = Object.keys(config.locales).findIndex(l => `/${flg}/` === l) > -1 ? flg : '';
+        const url = this.router.url;
+        this.language = this.service.findLanguage(url);
         const componentsList = menus.reduce((pre, cur) => {
           // TODO: attrType
           return pre.concat((cur as any).children);
         }, []);
         this.list = this.flatSidebar([ ...menus.filter(m => m.language === this.language) ]);
-        this.index = this.list.findIndex(item => item.link === `/${url}`);
+        this.index = this.list.findIndex(item => item.link === url);
       }
     });
   }

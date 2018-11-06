@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
 readonly dir=`pwd`
-npm install ${dir} -g
 cd docs
-nzpress build
+bash ${dir}/bin/nzpress.sh build
+cd ..
+mkdir docs1 && cd docs1
+echo '# Hello NzPress' > README.md
+bash ${dir}/bin/nzpress.sh build
