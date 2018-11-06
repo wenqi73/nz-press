@@ -10,6 +10,24 @@ readonly MD_DIR=`pwd`
 cd ${FILE_REAL_DIR}
 APP_DIR=${FILE_REAL_DIR}/../site/src/app
 
+BASE_HREF=/
+
+for ARG in "$@"; do
+  case "$ARG" in
+    dev)
+      ;;
+    build)
+      ;;
+    --base-href=*)
+      BASE_HREF=${ARG#--base-href=}
+      ;;
+    *)
+      echo "Unknown option $ARG."
+      exit 1
+      ;;
+  esac
+done
+
 if [[ -f "${MD_DIR}/.nzpress/config.js" ]]; then
   cp ${MD_DIR}/.nzpress/config.js ${APP_DIR}/../assets
 fi
@@ -27,7 +45,7 @@ node ${FILE_REAL_DIR}/../scripts/generate-md.js ${MD_DIR} ${APP_DIR}
 if [[ "$1" == "dev" ]]; then
   ng serve
 fi
-
+echo ${BASE_HREF}
 if [[ "$1" == "build" ]]; then
-  ng build --prod --output-path ${MD_DIR}/.nzpress/dist
+  ng build --prod --output-path ${MD_DIR}/.nzpress/dist --base-href=${BASE_HREF}
 fi

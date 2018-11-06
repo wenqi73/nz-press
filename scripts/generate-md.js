@@ -23,11 +23,18 @@ let menus = [];
 let locales = [];
 
 let config;
+let hasConfig = false;
+
 try {
   config = require(path.join(sourcePath, '.nzpress', 'config.js'));
-  locales = Object.keys(config.locales);
+  hasConfig = true;
 } catch (err) {
-  console.log('There is no config.js');
+  config = require(path.join(compilePath, `../assets/default-config.js`));
+  hasConfig = false;
+  console.log('There is no config.js, use the default-config.js');
+} finally {
+  locales = Object.keys(config.locales);
+  fs.writeFileSync(path.join(compilePath, `../assets/config.js`), `module.exports = ${JSON.stringify(config)}`);
 }
    
 /**
@@ -56,7 +63,7 @@ copyFile(
   path.join(compilePath, `layout.component.ts`)
 );
 
-if (locales.length > 0) {
+if (hasConfig) {
   // reset menus
   menus = [];
   locales.forEach(l => {

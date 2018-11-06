@@ -8,6 +8,7 @@ import {
 
 import { NzHighlightModule } from './nz-highlight/nz-highlight.module';
 import { NzNavBottomModule } from './nz-nav-bottom/nz-nav-bottom.module';
+import { ConfigService } from './config.service';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { NzNavBottomModule } from './nz-nav-bottom/nz-nav-bottom.module';
     NzHighlightModule,
     NzNavBottomModule
     // third libs
-  ]
+  ],
+  providers: [ ConfigService ]
 })
 export class ShareModule { }
