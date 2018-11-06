@@ -1,3 +1,14 @@
+<a name="0.2.3"></a>
+## [0.2.3](https://github.com/ng-alliance/nz-press/compare/0.2.1...0.2.3) (2018-11-06)
+
+
+### Bug Fixes
+
+* data error in nav-bottom ([#9](https://github.com/ng-alliance/nz-press/issues/9)) ([70ee8d7](https://github.com/ng-alliance/nz-press/commit/70ee8d7))
+* lose tsconfig.json ([6fb2b44](https://github.com/ng-alliance/nz-press/commit/6fb2b44))
+
+
+
 <a name="0.2.2"></a>
 ## [0.2.2](https://github.com/ng-alliance/nz-press/compare/0.2.1...0.2.2) (2018-11-06)
 
