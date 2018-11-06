@@ -5,8 +5,8 @@
 /dist-server
 /tmp
 /out-tsc
-/site/src/app
-!/site/src/app/share/*
+/site/src/app/*
+!/site/src/app/share/
 !/site/src/app/app.component.ts
 /docs/.nzpress/dist
 
