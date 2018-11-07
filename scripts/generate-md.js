@@ -65,14 +65,15 @@ copyFile(
 
 if (hasConfig) {
   // reset menus
-  menus = [];
+  const configMenus = [];
   locales.forEach(l => {
-    const sidebar = config.locales[l].sidebar;
+    const sidebar = config.locales[l].sidebar || [];
     // set language
     sidebar.forEach(s => s.language = l.replace(/\//g, ''));
     // generate menu
-    menus.push(...sidebar);
+    configMenus.push(...sidebar);
   })
+  if (configMenus.length > 0) menus = configMenus;
 }
 
 if (menus.length > 0) {
