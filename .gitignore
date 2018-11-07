@@ -6,6 +6,8 @@
 /tmp
 /out-tsc
 /site/src/app/*
+/site/src/assets/config.js
+/site/src/assets/menus.ts
 !/site/src/app/share/
 !/site/src/app/app.component.ts
 /docs/.nzpress/dist
