@@ -1,3 +1,12 @@
+## [0.2.4](https://github.com/ng-alliance/nz-press/compare/0.2.3...0.2.4) (2018-11-08)
+
+
+### Bug Fixes
+
+* no sidebar property in config.js ([#11](https://github.com/ng-alliance/nz-press/issues/11)) ([ffa854b](https://github.com/ng-alliance/nz-press/commit/ffa854b))
+
+
+
 <a name="0.2.3"></a>
 ## [0.2.3](https://github.com/ng-alliance/nz-press/compare/0.2.1...0.2.3) (2018-11-06)
 
