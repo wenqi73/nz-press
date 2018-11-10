@@ -1,0 +1,106 @@
+#!/usr/bin/env node
+
+const chalk = require('chalk')
+const fs = require('fs')
+const pkg = require('../package.json')
+const program = require('commander')
+const { execSync, exec } = require('child_process')
+const path = require('path')
+const generateApp = require('../scripts/generate-app')
+const cli = require('@angular/cli').default
+
+const currentDir = process.cwd()
+const appDir = path.join(__dirname, '../site/src/app')
+
+// empty app directory
+fs.readdirSync(appDir).forEach(file => {
+  if (file !== 'share' && file !== 'app.component.ts') {
+    execSync(`rm -rf ${path.join(appDir, file)}`)
+  }
+})
+
+program
+  .version(pkg.version, '-v, --version')
+  .usage('<command> [options]')
+
+program
+  .command('dev')
+  .description('start development server')
+  .option('-p, --port <port>', 'use specified port (default: 4200)')
+  .action((dir = '.', options = {
+    port: 4200
+  }) => {
+    ngCommand('dev', options)
+  })
+
+program
+  .command('build')
+  .description('build dir as static site')
+  .option('--baseHref <path>', 'specify --base-href (default: /)')
+  .action((dir = '.', options = { baseHref: '/' }) => {
+    ngCommand('build', options)
+  })
+
+// output help information on unknown commands
+program
+  .arguments('<command>')
+  .action((cmd) => {
+    program.outputHelp()
+    console.log(`  ` + chalk.red(`Unknown command ${chalk.yellow(cmd)}.`))
+    console.log()
+  })
+
+// add some useful info on help
+// program.on('--help', () => {
+//   console.log()
+//   console.log(`  Run ${chalk.cyan(`nzpress <command> --help`)} for detailed usage of given command.`)
+//   console.log()
+// })
+
+// program.commands.forEach(c => c.on('--help', () => console.log()))
+
+// enhance common error messages
+const enhanceErrorMessages = (methodName, log) => {
+  program.Command.prototype[methodName] = function(...args) {
+    if (methodName === 'unknownOption' && this._allowUnknownOption) {
+      return
+    }
+    this.outputHelp()
+    console.log(`  ` + chalk.red(log(...args)))
+    console.log()
+    process.exit(1)
+  }
+}
+
+enhanceErrorMessages('missingArgument', argName => {
+  return `Missing required argument ${chalk.yellow(`<${argName}>`)}.`
+})
+
+enhanceErrorMessages('unknownOption', optionName => {
+  return `Unknown option ${chalk.yellow(optionName)}.`
+})
+
+enhanceErrorMessages('optionMissingArgument', (option, flag) => {
+  return `Missing required argument for option ${chalk.yellow(option.flags)}` + (
+    flag ? `, got ${chalk.yellow(flag)}` : ``
+  )
+})
+
+function ngCommand(command, options) {
+  generateApp(currentDir, appDir)
+  console.log(' Running angular cli ... ')
+  if (command === 'dev') {
+    console.log(appDir, options.port)
+    execSync(`cd ${appDir}`)
+    cli({ cliArgs: [`serve`]})
+  } else if (command === 'build') {
+    execSync(`cd ${appDir} && ng build --output-path ${currentDir}/.nzpress/dist --base-href=${options.baseHref}`)
+  }
+  process.exitCode = 1
+}
+
+program.parse(process.argv)
+if (!process.argv.slice(2).length) {
+  program.outputHelp()
+}
+// }
