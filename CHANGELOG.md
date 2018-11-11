@@ -1,3 +1,13 @@
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/ng-alliance/nz-press/compare/0.2.4...0.3.0) (2018-11-11)
+
+
+### Bug Fixes
+
+* change shell from bash to node ([#15](https://github.com/ng-alliance/nz-press/issues/15)) ([14c4fe5](https://github.com/ng-alliance/nz-press/commit/14c4fe5))
+
+
+
 ## [0.2.4](https://github.com/ng-alliance/nz-press/compare/0.2.3...0.2.4) (2018-11-08)
 
 
