@@ -2,9 +2,10 @@
 
 const chalk = require('chalk')
 const fs = require('fs')
+const fsExtra = require('fs-extra')
+
 const pkg = require('../package.json')
 const program = require('commander')
-const { execSync } = require('child_process')
 const path = require('path')
 const generateApp = require('../scripts/generate-app')
 let cli = require('@angular/cli')
@@ -18,7 +19,7 @@ if ('default' in cli) {
 // empty app directory
 fs.readdirSync(appDir).forEach(file => {
   if (file !== 'share' && file !== 'app.component.ts') {
-    execSync(`rm -rf ${path.join(appDir, file)}`)
+    fsExtra.removeSync(path.join(appDir, file));
   }
 })
 
