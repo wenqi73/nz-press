@@ -1,3 +1,13 @@
+<a name="0.3.2"></a>
+## [0.3.2](https://github.com/wenqi73/nz-press/compare/0.3.0...0.3.2) (2018-11-11)
+
+
+### Bug Fixes
+
+* **bin:** delete bash script ([#19](https://github.com/wenqi73/nz-press/issues/19)) ([5e5dcf6](https://github.com/wenqi73/nz-press/commit/5e5dcf6))
+
+
+
 <a name="0.3.1"></a>
 ## [0.3.1](https://github.com/ng-alliance/nz-press/compare/0.3.0...0.3.1) (2018-11-11)
 
