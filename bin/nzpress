@@ -108,6 +108,14 @@ function ngCommand(command, dir, options) {
   } else if (command === 'build') {
     console.log(' Running angular build ... ')
     cli({ cliArgs: ['build', `--base-href=${options.baseHref}`, '--prod', `--output-path=${dir}/.nzpress/dist`]})
+      // throw 'npm ERR! code ELIFECYCLE' without this
+      .then((exitCode) => {
+        process.exit(exitCode)
+      })
+      .catch((err) => {
+        console.error('Unknown error: ' + err.toString())
+        process.exit(127)
+      })
   }
   process.exitCode = 1
 }

@@ -2,7 +2,6 @@
 
 set -u -e -o pipefail
 
-nzpress -v
 # document has config and languages
 nzpress build ./docs --base-href=./
 
