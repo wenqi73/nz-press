@@ -1,6 +1,6 @@
 {
   "name": "nz-press",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "An angular site generator inspiring by ng-zorro and vuepress",
   "main": "index.js",
   "bin": {
@@ -43,7 +43,9 @@
     "@angular/platform-browser-dynamic": "^6.1.6",
     "@angular/router": "^6.1.6",
     "@types/node": "~8.9.4",
+    "chalk": "^2.4.1",
     "core-js": "^2.5.4",
+    "fs-extra": "^7.0.1",
     "marked": "^0.4.0",
     "ng-zorro-antd": "^1.4.0",
     "node-prismjs": "^0.1.2",
@@ -55,9 +57,7 @@
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
-    "chalk": "^2.4.1",
     "codelyzer": "~4.2.1",
-    "fs-extra": "^7.0.1",
     "readline-sync": "^1.4.9",
     "tslint": "~5.9.1"
   },
