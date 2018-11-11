@@ -1,7 +1,7 @@
-const marked = require('marked');
+const marked = require('marked')
 
-const renderer = new marked.Renderer();
-const Prism = require('node-prismjs');
+const renderer = new marked.Renderer()
+const Prism = require('node-prismjs')
 
 const insideString = {
   variable: [
@@ -32,7 +32,7 @@ const insideString = {
     },
     /\$(?:[a-z0-9_#\?\*!@]+|\{[^}]+\})/i
   ],
-};
+}
 
 Prism.languages.bash = {
   'shebang': {
@@ -75,38 +75,38 @@ Prism.languages.bash = {
   'punctuation': /\$?\(\(?|\)\)?|\.\.|[{}[\];]/
 };
 
-const inside = insideString.variable[1].inside;
-inside['function'] = Prism.languages.bash['function'];
-inside.keyword = Prism.languages.bash.keyword;
-inside.boolean = Prism.languages.bash.boolean;
-inside.operator = Prism.languages.bash.operator;
-inside.punctuation = Prism.languages.bash.punctuation;
+const inside = insideString.variable[1].inside
+inside['function'] = Prism.languages.bash['function']
+inside.keyword = Prism.languages.bash.keyword
+inside.boolean = Prism.languages.bash.boolean
+inside.operator = Prism.languages.bash.operator
+inside.punctuation = Prism.languages.bash.punctuation
 
 renderer.heading = function (text, level) {
-  const lowerText = text.toLowerCase().replace(/ /g, '-').replace(/\./g, '-').replace(/\?/g, '');
-  const isMarkedLabel = (level === 3) && (text.indexOf('nz-') === 0);
-  const isDirective = (text.indexOf('[') > -1) && (text.indexOf(']') > -1);
+  const lowerText = text.toLowerCase().replace(/ /g, '-').replace(/\./g, '-').replace(/\?/g, '')
+  const isMarkedLabel = (level === 3) && (text.indexOf('nz-') === 0)
+  const isDirective = (text.indexOf('[') > -1) && (text.indexOf(']') > -1)
   const isComponent = isMarkedLabel && !isDirective;
-  const isService = (text.indexOf('Nz') === 0) && (text.indexOf('Service') > -1);
-  const head = `<h${level} id="${lowerText}"><span>${text}</span>`;
+  const isService = (text.indexOf('Nz') === 0) && (text.indexOf('Service') > -1)
+  const head = `<h${level} id="${lowerText}"><span>${text}</span>`
   const link = `<a onclick="window.location.hash = '${lowerText}'" class="anchor">#</a></h${level}>`;
   if (isComponent) {
-    return head + `<label class="api-type-label component">component</label>` + link;
+    return head + `<label class="api-type-label component">component</label>` + link
   } else if (isDirective) {
-    return head + `<label class="api-type-label directive">directive</label>` + link;
+    return head + `<label class="api-type-label directive">directive</label>` + link
   } else if (isService) {
-    return head + `<label class="api-type-label service">service</label>` + link;
+    return head + `<label class="api-type-label service">service</label>` + link
   } else {
-    return head + link;
+    return head + link
   }
-};
+}
 
 marked.setOptions({
   highlight: function (code, lang) {
-    const language = Prism.languages[lang] || Prism.languages.autoit;
-    return Prism.highlight(code, language);
+    const language = Prism.languages[lang] || Prism.languages.autoit
+    return Prism.highlight(code, language)
   },
   renderer : renderer
-});
+})
 
-module.exports = marked;
+module.exports = marked

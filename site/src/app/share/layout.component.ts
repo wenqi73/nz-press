@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { menus } from '../assets/menus';
-import config from '../assets/config';
+import { menus } from '../../assets/menus';
+import config from '../../assets/config';
 import { Router } from '@angular/router';
 
 @Component({

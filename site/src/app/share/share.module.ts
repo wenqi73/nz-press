@@ -9,6 +9,7 @@ import {
 import { NzHighlightModule } from './nz-highlight/nz-highlight.module';
 import { NzNavBottomModule } from './nz-nav-bottom/nz-nav-bottom.module';
 import { ConfigService } from './config.service';
+import { LayoutComponent } from './layout.component';
 
 @NgModule({
   imports: [
@@ -29,9 +30,10 @@ import { ConfigService } from './config.service';
     RouterModule,
     NgZorroAntdModule,
     NzHighlightModule,
-    NzNavBottomModule
-    // third libs
+    NzNavBottomModule,
+    LayoutComponent
   ],
+  declarations: [ LayoutComponent ],
   providers: [ ConfigService ]
 })
 export class ShareModule { }
