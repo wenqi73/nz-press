@@ -23,12 +23,12 @@ function generateTemplate(result) {
 };
 
 function generateDemoComponent(content) {
-  const demoComponentTemplate = String(fs.readFileSync(path.resolve(__dirname, './template/component.template.ts')));
-  const component = content.name;
-  let output = demoComponentTemplate;
-  output = output.replace(/{{component}}/g, component);
-  let zhOutput = output;
-  zhOutput = zhOutput.replace(/{{componentName}}/g, `${componentName(component + content.language)}`);
+  const demoComponentTemplate = String(fs.readFileSync(path.resolve(__dirname, './template/component.template.ts')))
+  const component = content.name
+  let output = demoComponentTemplate
+  output = output.replace(/{{component}}/g, component)
+  let zhOutput = output
+  zhOutput = zhOutput.replace(/{{componentName}}/g, `${componentName(component + content.language)}`)
   return {
     zh: zhOutput
   };
@@ -60,9 +60,11 @@ function generateToc(meta, raw) {
   for (let i = 0; i < ast.children.length; i++) {
     const child = ast.children[i];
     if (child.type === 'heading' && child.depth === 2) {
-      const text = child.children[0].value;
-      const lowerText = text.toLowerCase().replace(/ /g, '-').replace(/\./g, '-').replace(/\?/g,'');
-      links += `<nz-link nzHref="#${lowerText}" nzTitle="${text}"></nz-link>`
+      try { 
+        const text = child.children[0].value
+        const lowerText = text.toLowerCase().replace(/ /g, '-').replace(/\./g, '-').replace(/\?/g,'')
+        links += `<nz-link nzHref="#${lowerText}" nzTitle="${text}"></nz-link>`
+      } catch(err) { console.log('generateToc: ', err) }
     }
   }
   return `<nz-affix class="toc-affix" [nzOffsetTop]="16">

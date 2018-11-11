@@ -10,8 +10,10 @@
             "name": "nzpress dev",
             "program": "/usr/local/bin/nzpress",
             "args": [
-                "dev"
-            ]
+                "dev",
+                "--port=4203"
+            ],
+            "cwd": "${workspaceFolder}/docs"
         },
         {
             "type": "node",
