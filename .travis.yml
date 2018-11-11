@@ -26,6 +26,9 @@ before_install:
 
 before_script:
   - npm install -g @angular/cli
+  - npm uninstall -g nz-press
+  - npm cache verify -g
+  - npm install -g `pwd`
 
 script:
   - npm run $TASK
