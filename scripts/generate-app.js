@@ -79,6 +79,10 @@ module.exports = function(sourcePath, compilePath) {
     homeRoute = menus[0].link;
   }
 
+  if (config.home) {
+    homeRoute = config.home
+  }
+
   const menuFile = generateMenu(menus);
   fs.writeFileSync(path.join(compilePath, `../assets/menus.ts`), menuFile);
 
@@ -153,8 +157,6 @@ module.exports = function(sourcePath, compilePath) {
       }
     });
   }
-
-
 
   function generateMenu(menus) {
     const menuTemplate = String(fs.readFileSync(path.resolve(__dirname, './template/menus.ts')));

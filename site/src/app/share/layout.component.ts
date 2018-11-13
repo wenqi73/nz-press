@@ -11,21 +11,32 @@ export class LayoutComponent implements OnInit {
   list = menus;
   title = config.title;
   isCollapsed = false;
-  language = '';
+  languages;
+  language;
+  private _langs = [
+    { name: '', text: 'English' },
+    { name: 'zh', text: '中文' },
+  ];
+  oldLanguageName;
 
   constructor(private _router: Router) {
     const flg = this._router.url.split('/')[1];
-    this.language = Object.keys(config.locales).findIndex(l => `/${flg}/` === l) > -1 ? flg : '';
+    const configLangs = Object.keys(config.locales) || [];
+    // find languages exist in config.js, replace '//' to '/'
+    this.languages = this._langs.filter(lang => configLangs.includes(`/${lang.name}/`.replace(/\/\//, '/')));
+    // default is English
+    this.language = this.languages.find(l => flg === l.name) || { name: '', text: 'English' };
+    this.oldLanguageName = this.language.name;
   }
 
-  switchLanguage(value: string) {
+  switchLanguage(value: { name: string, text: string }) {
     let url = this._router.url;
-    // English is ''
-    if (this.language !== '') {
+    // old language is not English
+    if (this.oldLanguageName !== '') {
       url = this._router.url.split('/').slice(2).join('/');
-    } 
-    this.language = value;
-    this._router.navigateByUrl(`/${value}${url}`);
+    }
+    this.oldLanguageName = this.language.name;
+    this._router.navigateByUrl(`/${value.name}${url}`);
   }
 
   ngOnInit(): void { }

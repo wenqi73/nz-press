@@ -7,8 +7,8 @@
     "nzpress": "bin/nzpress"
   },
   "scripts": {
-    "start": "node ../bin/nzpress dev ./docs",
-    "init": "node ../bin/nzpress init ./docs",
+    "start": "node ./bin/nzpress dev ./2.x-doc",
+    "init": "node ./bin/nzpress init ./2.x-doc",
     "build": "bash build-test.sh",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json",
     "move": "rm -rf ../nzpress-doc/* && cp -r ./docs/.nzpress/dist/* ../nzpress-doc/ && cd ../nzpress-doc/ && git checkout update-doc && git add . && git commit -m 'update: docs' && git pull origin master --rebase && git push -u origin update-doc -f",
