@@ -37,6 +37,13 @@ program
   })
 
 program
+  .command('init [targetDir]')
+  .description('init app from md file')
+  .action((dir = '.') => {
+    generateApp(path.join(process.cwd(), dir), appDir)
+  })
+
+program
   .command('build [targetDir]')
   .description('build dir as static site')
   .option('--base-href <path>', 'specify --base-href (default: /)')
