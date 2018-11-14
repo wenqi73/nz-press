@@ -7,10 +7,15 @@ An angular site generator inspiring by [ng-zorro-antd](https://github.com/NG-ZOR
 
 forked from [https://github.com/wenqi73/nz-press](https://github.com/wenqi73/nz-press)
 ```bash
-# install
 npm install
 npm run start
 
 # when file changes
 npm run init
+
+# build 2.x
+npm run build
+
+# move dist to document repo, need to git clone https://github.com/matai-tech/2.x-doc.git
+npm run doc:commit
 ```
