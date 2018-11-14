@@ -51,7 +51,7 @@ module.exports = function(sourcePath, compilePath) {
    */
   for (let i = 0; i < dir.length; i++) {
     const name = dir[i];
-    if (locales.indexOf(`/${name}/`) >= 0) {
+    if (locales.indexOf(`/${name}`) >= 0) {
       dir.splice(i, 1);
       i--;
       fs.mkdirSync(path.join(compilePath, name));
@@ -77,6 +77,10 @@ module.exports = function(sourcePath, compilePath) {
 
   if (menus.length > 0) {
     homeRoute = menus[0].link;
+  }
+
+  if (config.home) {
+    homeRoute = config.home
   }
 
   const menuFile = generateMenu(menus);
@@ -153,8 +157,6 @@ module.exports = function(sourcePath, compilePath) {
       }
     });
   }
-
-
 
   function generateMenu(menus) {
     const menuTemplate = String(fs.readFileSync(path.resolve(__dirname, './template/menus.ts')));

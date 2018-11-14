@@ -20,7 +20,12 @@
             "tsConfig": "site/src/tsconfig.app.json",
             "assets": [
               "site/src/favicon.ico",
-              "site/src/assets"
+              "site/src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
+              }
             ],
             "styles": [
               "site/src/styles.less"
