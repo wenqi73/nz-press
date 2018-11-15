@@ -7,9 +7,9 @@
     "nzpress": "bin/nzpress"
   },
   "scripts": {
-    "start": "node ./bin/nzpress dev ./2.x-doc",
-    "init": "node ./bin/nzpress init ./2.x-doc",
-    "build": "node ./bin/nzpress build ./2.x-doc --base-href=./",
+    "start": "node ./bin/nzpress dev ./docs",
+    "init": "node ./bin/nzpress init ./docs",
+    "build": "node ./bin/nzpress build ./docs --base-href=./",
     "build-test": "bash ./build-test.sh",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json",
     "doc:commit": "rm -rf ../2.x-doc/* && cp -r ./2.x-doc/.nzpress/dist/* ../2.x-doc/ && cd ../2.x-doc/ && git add . && git commit -m 'update: docs' && git push",
