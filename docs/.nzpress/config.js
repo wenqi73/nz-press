@@ -21,7 +21,7 @@ module.exports  = {
         }
       ]
     },
-    '/zh/': {
+    '/zh': {
       lang: 'zh-CN',
       title: 'NzPress',
       description: 'angular 驱动的静态网站生成器',

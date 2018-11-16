@@ -8,7 +8,8 @@ env:
   # - TASK=pre-release
   # - TASK=test
   # - TASK=lint
-  - TASK=build
+  # - TASK=build
+  - TASK=build-test
   # - TASK=integration-webpack
   # - TASK=integration-rollup
 addons:

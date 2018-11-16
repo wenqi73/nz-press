@@ -7,10 +7,12 @@
     "nzpress": "bin/nzpress"
   },
   "scripts": {
-    "start": "cd docs && node ../bin/nzpress dev",
-    "build": "bash build-test.sh",
+    "start": "node ./bin/nzpress dev ./docs",
+    "init": "node ./bin/nzpress init ./docs",
+    "build": "node ./bin/nzpress build ./docs --base-href=./",
+    "build-test": "bash ./build-test.sh",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json",
-    "move": "rm -rf ../nzpress-doc/* && cp -r ./docs/.nzpress/dist/* ../nzpress-doc/ && cd ../nzpress-doc/ && git checkout update-doc && git add . && git commit -m 'update: docs' && git pull origin master --rebase && git push -u origin update-doc -f",
+    "doc:commit": "rm -rf ../2.x-doc/* && cp -r ./2.x-doc/.nzpress/dist/* ../2.x-doc/ && cd ../2.x-doc/ && git add . && git commit -m 'update: docs' && git push",
     "release": "node ./scripts/publish/publish.js"
   },
   "repository": {

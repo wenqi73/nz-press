@@ -9,14 +9,14 @@ import { ConfigService } from '../config.service';
   template: `
     <section class="prev-next-nav">
       <a class="prev-page" *ngIf="index-1>=0" [routerLink]="list[index-1]?.link">
-        <i class="anticon anticon-left footer-nav-icon-before"></i>
+        <i nz-icon type="left" class="footer-nav-icon-before"></i>
         <span>{{ list[index - 1]?.label }}</span><span class="chinese">{{ list[index - 1]?.title }}</span>
-        <i class="anticon anticon-right footer-nav-icon-after"></i>
+        <i nz-icon type="left" class="footer-nav-icon-after"></i>
       </a>
       <a class="next-page" *ngIf="index+1<list?.length" [routerLink]="list[index+1]?.link">
         <i class="anticon anticon-left footer-nav-icon-before"></i>
         <span>{{ list[index + 1]?.label }}</span><span class="chinese">{{ list[index + 1]?.title }}</span>
-        <i class="anticon anticon-right footer-nav-icon-after"></i>
+        <i nz-icon type="left" class="footer-nav-icon-after"></i>
       </a>
     </section>
   `
@@ -36,7 +36,7 @@ export class NzNavBottomComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const url = this.router.url;
-        this.language = this.service.findLanguage(url);
+        this.language = this.service.getLangByUrl(url).name;
         const componentsList = menus.reduce((pre, cur) => {
           // TODO: attrType
           return pre.concat((cur as any).children);
