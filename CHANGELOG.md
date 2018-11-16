@@ -1,3 +1,12 @@
+## [0.3.4](https://github.com/wenqi73/nz-press/compare/0.3.2...0.3.4) (2018-11-16)
+
+
+### Features
+
+* title and description changes ([#23](https://github.com/wenqi73/nz-press/issues/23)) ([099de52](https://github.com/wenqi73/nz-press/commit/099de52))
+
+
+
 <a name="0.3.2"></a>
 ## [0.3.2](https://github.com/wenqi73/nz-press/compare/0.3.0...0.3.2) (2018-11-11)
 
